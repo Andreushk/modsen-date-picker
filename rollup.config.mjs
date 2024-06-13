@@ -1,3 +1,4 @@
+import alias from '@rollup/plugin-alias';
 import { babel } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
@@ -31,6 +32,9 @@ export default [
       typescript({
         tsconfig: './tsconfig.json',
         exclude: ['**/*.test.tsx', '**/*.test.ts', '**/*.stories.ts'],
+      }),
+      alias({
+        entries: [{ find: '@', replacement: 'src' }],
       }),
       babel({
         exclude: 'node_modules/**',
