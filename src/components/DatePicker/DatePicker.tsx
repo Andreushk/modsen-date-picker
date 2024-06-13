@@ -4,7 +4,7 @@ import StyledContainer from './styled';
 
 const DatePicker: React.FC = () => (
   <ThemeProvider>
-    <StyledContainer>Calendar here</StyledContainer>
+    <StyledContainer>Text here</StyledContainer>
   </ThemeProvider>
 );
 

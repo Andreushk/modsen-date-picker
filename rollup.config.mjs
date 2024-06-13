@@ -3,6 +3,7 @@ import { babel } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import url from '@rollup/plugin-url';
 import dts from 'rollup-plugin-dts';
 import external from 'rollup-plugin-peer-deps-external';
 import { terser } from 'rollup-plugin-terser';
@@ -40,6 +41,10 @@ export default [
         exclude: 'node_modules/**',
         presets: ['@babel/preset-react'],
         babelHelpers: 'bundled',
+      }),
+      url({
+        include: ['**/*.ttf'],
+        limit: 0,
       }),
     ],
   },
