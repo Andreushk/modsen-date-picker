@@ -12,6 +12,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const PrimaryButton: Story = {
-  args: {},
+export const DatePickerComponent: Story = {
+  args: { inputLabel: 'Date', inputPlaceholder: 'Select date' },
 };

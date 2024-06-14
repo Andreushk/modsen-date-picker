@@ -1,6 +1,6 @@
 {
   "name": "@andreushk/calendar-library",
-  "version": "0.0.16",
+  "version": "0.0.52",
   "description": "calendar library",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -28,6 +28,7 @@
     "@babel/preset-react": "^7.24.1",
     "@babel/preset-typescript": "^7.24.1",
     "@chromatic-com/storybook": "^1.5.0",
+    "@newhighsco/storybook-addon-svgr": "^2.0.18",
     "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^26.0.1",
@@ -43,6 +44,7 @@
     "@storybook/react": "^8.1.6",
     "@storybook/react-webpack5": "^8.1.6",
     "@storybook/test": "^8.1.6",
+    "@svgr/rollup": "^8.1.0",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.5",
     "@testing-library/react-hooks": "^8.0.1",

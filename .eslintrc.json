@@ -31,8 +31,10 @@
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
     "import/no-extraneous-dependencies": "off",
+    "jsx-a11y/control-has-associated-label": "off",
     "react/jsx-props-no-spreading": "off",
     "import/export": "off",
+    "radix": "off",
     "import/extensions": [
       "off",
       {

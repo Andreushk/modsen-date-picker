@@ -1,19 +1,21 @@
-import DatePicker from '@/components/DatePicker/DatePicker';
+import DatePicker, { IDatePickerProps } from '@/components/DatePicker/DatePicker';
 
-type DecoratorType = (Component: React.FC) => React.FC;
+type DecoratorType<IDatePickerProps> = (
+  Component: React.FC<IDatePickerProps>,
+) => React.FC<IDatePickerProps>;
 
 class CalendarService {
-  private calendarComponent: React.FC;
+  private calendarComponent: React.FC<IDatePickerProps>;
 
   constructor() {
     this.calendarComponent = DatePicker;
   }
 
-  addFunctionality(decorator: DecoratorType): void {
+  public addFunctionality(decorator: DecoratorType<IDatePickerProps>): void {
     this.calendarComponent = decorator(this.calendarComponent);
   }
 
-  getCalendar(): React.FC {
+  public getCalendar(): React.FC<IDatePickerProps> {
     return this.calendarComponent;
   }
 }
