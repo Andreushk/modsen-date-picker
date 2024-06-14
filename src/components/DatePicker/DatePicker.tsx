@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import { Input, ThemeProvider } from '@/components';
+import { Calendar, Input, ThemeProvider } from '@/components';
 
 import StyledContainer from './styled';
 
@@ -11,10 +11,15 @@ export interface IDatePickerProps {
 
 const DatePicker: React.FC<IDatePickerProps> = ({ inputLabel, inputPlaceholder }) => {
   const [dateInputValue, setDateInputValue] = useState<string>('');
+  const [isShowCalendar, setIsShowCalendar] = useState<boolean>(false);
 
-  const handleInputChanges = (newValue: string): void => {
+  const handleInputChanges = useCallback((newValue: string): void => {
     setDateInputValue(newValue);
-  };
+  }, []);
+
+  const handleCalendarClick = useCallback((): void => {
+    setIsShowCalendar((prevState) => !prevState);
+  }, []);
 
   return (
     <ThemeProvider>
@@ -24,7 +29,9 @@ const DatePicker: React.FC<IDatePickerProps> = ({ inputLabel, inputPlaceholder }
           value={dateInputValue}
           placeholder={inputPlaceholder}
           onChange={handleInputChanges}
+          onCalendarClick={handleCalendarClick}
         />
+        {isShowCalendar && <Calendar />}
       </StyledContainer>
     </ThemeProvider>
   );

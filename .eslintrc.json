@@ -33,6 +33,7 @@
     "import/no-extraneous-dependencies": "off",
     "jsx-a11y/control-has-associated-label": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/no-array-index-key": "off",
     "import/export": "off",
     "radix": "off",
     "import/extensions": [

@@ -9,15 +9,28 @@ interface IComponentProps {
   placeholder: string | undefined;
   value: string;
   onChange: (newValue: string) => void;
+  onCalendarClick: () => void;
 }
 
-const Input: React.FC<IComponentProps> = ({ label, value, placeholder, onChange }) => {
+const Input: React.FC<IComponentProps> = ({
+  label,
+  value,
+  placeholder,
+  onChange,
+  onCalendarClick,
+}) => {
   const inputId: string = useId();
 
   return (
     <StyledContainer>
       {label && <LabelPart htmlFor={inputId}>{label}</LabelPart>}
-      <InputPart id={inputId} value={value} placeholder={placeholder} onChange={onChange} />
+      <InputPart
+        id={inputId}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        onCalendarClick={onCalendarClick}
+      />
     </StyledContainer>
   );
 };

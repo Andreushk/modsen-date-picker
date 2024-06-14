@@ -10,6 +10,9 @@ interface IColors {
     calendarItems: string;
     calendarItemsDisabled: string;
   };
+  backgrounds: {
+    hoveredCalendarItem: string;
+  };
 }
 
 interface IWidths {
@@ -48,6 +51,12 @@ interface IBorderRadiuses {
   calendarItems: string;
 }
 
+interface IDurations {
+  quick: '100ms';
+  normal: '200ms';
+  slow: '300ms';
+}
+
 interface IZIndexes {
   1: 1;
   2: 2;
@@ -65,6 +74,7 @@ interface ITheme {
   fontWeights: IFontWeights;
   borderRadiuses: IBorderRadiuses;
   zIndexes: IZIndexes;
+  durations: IDurations;
 }
 
 export default ITheme;

@@ -5,6 +5,7 @@ const theme: ITheme = {
     '5px', // 0
     '8px', // 1
     '10px', // 2
+    '16px', // 3
   ],
   colors: {
     primary: '#2F80ED',
@@ -17,6 +18,9 @@ const theme: ITheme = {
       calendarTitle: '#000000',
       calendarItems: '#333333',
       calendarItemsDisabled: '#AAAAAA',
+    },
+    backgrounds: {
+      hoveredCalendarItem: '#f1f1f1',
     },
   },
   widths: {
@@ -48,6 +52,11 @@ const theme: ITheme = {
   },
   borderRadiuses: {
     calendarItems: '8px',
+  },
+  durations: {
+    slow: '300ms',
+    normal: '200ms',
+    quick: '100ms',
   },
   zIndexes: {
     1: 1,

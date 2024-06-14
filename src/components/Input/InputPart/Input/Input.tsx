@@ -1,4 +1,4 @@
-import transformEnteredDate from '@/utils/transformEnteredDate';
+import transformEnteredDate from '@/utils/helpers/transformEnteredDate';
 
 import StyledInput from './styled';
 
