@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import getCalendarDates from '@/utils/helpers/getCalendarDates';
 
@@ -7,29 +7,45 @@ import StyledContainer from './styled';
 import TableHead from './TableHead/TableHead';
 import TitleWithControls from './TitleWithControls/TitleWithControls';
 
-const Calendar: React.FC = () => {
-  const today = new Date();
-  const dates = getCalendarDates(today.getFullYear(), today.getMonth());
+interface IComponentProps {
+  date: Date;
+  onDateChange: (newDate: Date) => void;
+}
 
-  const weeks: Array<Array<Date>> = [];
-  for (let i = 0; i < dates.length; i += 7) {
-    weeks.push(dates.slice(i, i + 7));
-  }
+const Calendar: React.FC<IComponentProps> = ({ date, onDateChange }) => {
+  const calendarDates: Date[] = useMemo(
+    () => getCalendarDates(date.getFullYear(), date.getMonth()),
+    [date],
+  );
+
+  const weeks: Array<Array<Date>> = useMemo(() => {
+    const result = [];
+
+    for (let i = 0; i < calendarDates.length; i += 7) {
+      result.push(calendarDates.slice(i, i + 7));
+    }
+
+    return result;
+  }, [calendarDates]);
 
   return (
     <StyledContainer>
-      <TitleWithControls monthIndex={today.getMonth()} year={today.getFullYear()} />
+      <TitleWithControls
+        month={date.getMonth()}
+        year={date.getFullYear()}
+        onDateSwitch={onDateChange}
+      />
       <table>
         <TableHead />
         <tbody>
           {weeks.map((week, i) => (
             <tr key={i}>
-              {week.map((date) => {
-                const isCurrentMonth = date.getMonth() === today.getMonth();
+              {week.map((weekDate) => {
+                const isCurrentMonth = weekDate.getMonth() === date.getMonth();
                 return (
                   <DayCell
-                    key={date.getDate()}
-                    day={date.getDate()}
+                    key={weekDate.getDate()}
+                    day={weekDate.getDate()}
                     disabled={!isCurrentMonth}
                     selected={false}
                   />

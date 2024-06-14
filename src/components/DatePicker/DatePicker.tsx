@@ -10,6 +10,7 @@ export interface IDatePickerProps {
 }
 
 const DatePicker: React.FC<IDatePickerProps> = ({ inputLabel, inputPlaceholder }) => {
+  const [date, setDate] = useState<Date>(() => new Date());
   const [dateInputValue, setDateInputValue] = useState<string>('');
   const [isShowCalendar, setIsShowCalendar] = useState<boolean>(false);
 
@@ -31,7 +32,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({ inputLabel, inputPlaceholder }
           onChange={handleInputChanges}
           onCalendarClick={handleCalendarClick}
         />
-        {isShowCalendar && <Calendar />}
+        {isShowCalendar && <Calendar date={date} onDateChange={setDate} />}
       </StyledContainer>
     </ThemeProvider>
   );
