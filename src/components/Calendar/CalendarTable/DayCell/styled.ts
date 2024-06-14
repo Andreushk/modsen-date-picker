@@ -2,9 +2,11 @@ import styled, { css } from 'styled-components';
 
 interface IStyleProps {
   $disabled: boolean;
+  $selected: boolean;
 }
 
 const StyledCell = styled.td<IStyleProps>`
+  cursor: pointer;
   width: ${({ theme }) => theme.widths.calendarDay};
   height: ${({ theme }) => theme.heights.calendarDay};
   font-size: ${({ theme }) => theme.fontSizes.calendarDay};
@@ -13,6 +15,14 @@ const StyledCell = styled.td<IStyleProps>`
   text-align: center;
   vertical-align: middle;
 
+  ${({ $selected }) =>
+    $selected &&
+    css`
+      border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
+      background-color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.text.white};
+    `}
+
   ${({ $disabled }) =>
     $disabled &&
     css`
@@ -20,10 +30,10 @@ const StyledCell = styled.td<IStyleProps>`
       color: ${({ theme }) => theme.colors.text.calendarItemsDisabled};
     `}
 
-  ${({ $disabled }) =>
+  ${({ $disabled, $selected }) =>
     !$disabled &&
+    !$selected &&
     css`
-      cursor: pointer;
       color: ${({ theme }) => theme.colors.text.calendarItems};
 
       &:hover {

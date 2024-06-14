@@ -6,11 +6,19 @@ import TitleWithControls from './TitleWithControls/TitleWithControls';
 
 interface IComponentProps {
   date: Date;
+  selectedDate: string | null;
   withOpeningAnimation: boolean;
+  onDateClick: (day: string) => void;
   onDateChange: (newDate: Date) => void;
 }
 
-const Calendar: React.FC<IComponentProps> = ({ date, withOpeningAnimation, onDateChange }) => {
+const Calendar: React.FC<IComponentProps> = ({
+  date,
+  selectedDate,
+  withOpeningAnimation,
+  onDateClick,
+  onDateChange,
+}) => {
   const [isVisible, setIsVisible] = useState<boolean>(!withOpeningAnimation);
 
   useEffect((): void => {
@@ -24,7 +32,7 @@ const Calendar: React.FC<IComponentProps> = ({ date, withOpeningAnimation, onDat
         year={date.getFullYear()}
         onDateSwitch={onDateChange}
       />
-      <CalendarTable date={date} />
+      <CalendarTable date={date} selectedDate={selectedDate} onDateClick={onDateClick} />
     </StyledContainer>
   );
 };

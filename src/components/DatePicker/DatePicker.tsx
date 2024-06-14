@@ -27,6 +27,16 @@ const DatePicker: React.FC<IDatePickerProps> = ({
     setIsShowCalendar((prevState) => !prevState);
   }, []);
 
+  const handleDayClick = useCallback(
+    (day: string) => {
+      const monthIndex: string = String(date.getMonth() + 1);
+      const transformedDay: string = day.length > 1 ? day : `0${day}`;
+      const transformedMonth: string = monthIndex.length > 1 ? monthIndex : `0${monthIndex}`;
+      setDateInputValue(`${transformedDay}.${transformedMonth}.${date.getFullYear()}`);
+    },
+    [date],
+  );
+
   return (
     <ThemeProvider>
       <StyledContainer>
@@ -40,8 +50,10 @@ const DatePicker: React.FC<IDatePickerProps> = ({
         {isShowCalendar && (
           <Calendar
             date={date}
-            onDateChange={setDate}
+            selectedDate={dateInputValue || null}
             withOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
+            onDateClick={handleDayClick}
+            onDateChange={setDate}
           />
         )}
       </StyledContainer>

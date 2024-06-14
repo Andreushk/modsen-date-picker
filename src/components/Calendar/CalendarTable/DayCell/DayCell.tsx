@@ -8,9 +8,10 @@ interface IComponentProps {
   disabled: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DayCell: React.FC<IComponentProps> = ({ day, selected, disabled }) => (
-  <StyledCell $disabled={disabled}>{day}</StyledCell>
+  <StyledCell data-day={disabled ? null : day} $disabled={disabled} $selected={selected}>
+    {day}
+  </StyledCell>
 );
 
 export default React.memo(DayCell);
