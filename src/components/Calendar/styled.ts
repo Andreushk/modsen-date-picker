@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.div<{ $isVisible: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,6 +16,9 @@ const StyledContainer = styled.div`
   padding: ${({ theme }) => theme.spaces[1]};
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
+
+  opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
+  transition: opacity ${({ theme }) => theme.durations.quick} ease;
 `;
 
 export default StyledContainer;

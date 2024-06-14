@@ -33,4 +33,4 @@ const TitleWithControls: React.FC<IComponentProps> = ({ month, year, onDateSwitc
   );
 };
 
-export default React.memo(TitleWithControls);
+export default TitleWithControls;

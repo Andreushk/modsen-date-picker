@@ -1,60 +1,30 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import getCalendarDates from '@/utils/helpers/getCalendarDates';
-
-import DayCell from './DayCell/DayCell';
+import CalendarTable from './CalendarTable/CalendarTable';
 import StyledContainer from './styled';
-import TableHead from './TableHead/TableHead';
 import TitleWithControls from './TitleWithControls/TitleWithControls';
 
 interface IComponentProps {
   date: Date;
+  withOpeningAnimation: boolean;
   onDateChange: (newDate: Date) => void;
 }
 
-const Calendar: React.FC<IComponentProps> = ({ date, onDateChange }) => {
-  const calendarDates: Date[] = useMemo(
-    () => getCalendarDates(date.getFullYear(), date.getMonth()),
-    [date],
-  );
+const Calendar: React.FC<IComponentProps> = ({ date, withOpeningAnimation, onDateChange }) => {
+  const [isVisible, setIsVisible] = useState<boolean>(!withOpeningAnimation);
 
-  const weeks: Array<Array<Date>> = useMemo(() => {
-    const result = [];
-
-    for (let i = 0; i < calendarDates.length; i += 7) {
-      result.push(calendarDates.slice(i, i + 7));
-    }
-
-    return result;
-  }, [calendarDates]);
+  useEffect((): void => {
+    setIsVisible(true);
+  }, []);
 
   return (
-    <StyledContainer>
+    <StyledContainer $isVisible={isVisible}>
       <TitleWithControls
         month={date.getMonth()}
         year={date.getFullYear()}
         onDateSwitch={onDateChange}
       />
-      <table>
-        <TableHead />
-        <tbody>
-          {weeks.map((week, i) => (
-            <tr key={i}>
-              {week.map((weekDate) => {
-                const isCurrentMonth = weekDate.getMonth() === date.getMonth();
-                return (
-                  <DayCell
-                    key={weekDate.getDate()}
-                    day={weekDate.getDate()}
-                    disabled={!isCurrentMonth}
-                    selected={false}
-                  />
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <CalendarTable date={date} />
     </StyledContainer>
   );
 };

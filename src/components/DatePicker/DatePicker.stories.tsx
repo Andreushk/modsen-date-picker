@@ -13,5 +13,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const DatePickerComponent: Story = {
-  args: { inputLabel: 'Date', inputPlaceholder: 'Select date' },
+  args: {
+    inputLabel: 'Date',
+    inputPlaceholder: 'Select date',
+    withCalendarOpeningAnimation: false,
+  },
 };
