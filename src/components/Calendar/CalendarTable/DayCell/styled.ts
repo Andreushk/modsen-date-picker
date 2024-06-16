@@ -1,8 +1,10 @@
 import styled, { css } from 'styled-components';
 
+export type DayCellTypes = 'selected' | 'starting' | 'inRange' | 'ending' | 'default';
+
 interface IStyleProps {
+  $variant: DayCellTypes;
   $disabled: boolean;
-  $selected: boolean;
 }
 
 const StyledCell = styled.td<IStyleProps>`
@@ -15,14 +17,6 @@ const StyledCell = styled.td<IStyleProps>`
   text-align: center;
   vertical-align: middle;
 
-  ${({ $selected }) =>
-    $selected &&
-    css`
-      border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
-      background-color: ${({ theme }) => theme.colors.primary};
-      color: ${({ theme }) => theme.colors.text.white};
-    `}
-
   ${({ $disabled }) =>
     $disabled &&
     css`
@@ -30,9 +24,42 @@ const StyledCell = styled.td<IStyleProps>`
       color: ${({ theme }) => theme.colors.text.calendarItemsDisabled};
     `}
 
-  ${({ $disabled, $selected }) =>
+  ${({ $variant }) =>
+    $variant === 'selected' &&
+    css`
+      border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
+      background-color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.text.white};
+    `}
+
+  ${({ $variant }) =>
+    $variant === 'ending' &&
+    css`
+      border-top-right-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
+      border-bottom-right-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
+      background-color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.text.white};
+    `}
+
+  ${({ $variant }) =>
+    $variant === 'starting' &&
+    css`
+      border-bottom-left-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
+      border-top-left-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
+      background-color: ${({ theme }) => `${theme.colors.primary}60`};
+      color: ${({ theme }) => theme.colors.text.white};
+    `}
+
+  ${({ $variant }) =>
+    $variant === 'inRange' &&
+    css`
+      background-color: ${({ theme }) => `${theme.colors.primary}10`};
+      color: ${({ theme }) => theme.colors.primary};
+    `}
+
+  ${({ $disabled, $variant }) =>
     !$disabled &&
-    !$selected &&
+    $variant === 'default' &&
     css`
       color: ${({ theme }) => theme.colors.text.calendarItems};
 

@@ -1,15 +1,15 @@
 import React from 'react';
 
-import StyledCell from './styled';
+import StyledCell, { DayCellTypes } from './styled';
 
 interface IComponentProps {
   day: number;
-  selected: boolean;
+  variant: DayCellTypes;
   disabled: boolean;
 }
 
-const DayCell: React.FC<IComponentProps> = ({ day, selected, disabled }) => (
-  <StyledCell data-day={disabled ? null : day} $disabled={disabled} $selected={selected}>
+const DayCell: React.FC<IComponentProps> = ({ day, disabled, variant }) => (
+  <StyledCell data-day={disabled ? null : day} $disabled={disabled} $variant={variant}>
     {day}
   </StyledCell>
 );

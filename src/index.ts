@@ -1,2 +1,7 @@
-export { withInputLabel, withInputPlaceholder } from '@/hocs';
+export {
+  withInputLabel,
+  withInputPlaceholder,
+  withCalendarOpeningAnimation,
+  withInterval,
+} from '@/hocs';
 export { CalendarService } from '@/services';

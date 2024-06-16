@@ -17,5 +17,6 @@ export const DatePickerComponent: Story = {
     inputLabel: 'Date',
     inputPlaceholder: 'Select date',
     withCalendarOpeningAnimation: false,
+    withInterval: true,
   },
 };

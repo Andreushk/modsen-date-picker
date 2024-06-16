@@ -1,26 +1,24 @@
 import { useCallback, useState } from 'react';
 
 import { Calendar, Input, ThemeProvider } from '@/components';
+import { formatStringToDate } from '@/utils/helpers';
 
 import StyledContainer from './styled';
-
-export interface IDatePickerProps {
-  inputLabel: string | undefined;
-  inputPlaceholder: string | undefined;
-  withCalendarOpeningAnimation: boolean | undefined;
-}
+import { IDatePickerProps, IIntervalDates } from './types';
 
 const DatePicker: React.FC<IDatePickerProps> = ({
   inputLabel,
   inputPlaceholder,
   withCalendarOpeningAnimation,
+  withInterval,
 }) => {
   const [date, setDate] = useState<Date>(() => new Date());
-  const [dateInputValue, setDateInputValue] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [intervalDates, setIntervalDates] = useState<IIntervalDates>({ fromDate: '', toDate: '' });
   const [isShowCalendar, setIsShowCalendar] = useState<boolean>(false);
 
   const handleInputChanges = useCallback((newValue: string): void => {
-    setDateInputValue(newValue);
+    setSelectedDate(newValue);
   }, []);
 
   const handleCalendarClick = useCallback((): void => {
@@ -28,17 +26,38 @@ const DatePicker: React.FC<IDatePickerProps> = ({
   }, []);
 
   const handleCancelButtonClick = useCallback((): void => {
-    setDateInputValue('');
+    setSelectedDate('');
+    setIntervalDates({ fromDate: '', toDate: '' });
   }, []);
 
-  const handleDayClick = useCallback(
-    (day: string) => {
-      const monthIndex: string = String(date.getMonth() + 1);
-      const transformedDay: string = day.length > 1 ? day : `0${day}`;
-      const transformedMonth: string = monthIndex.length > 1 ? monthIndex : `0${monthIndex}`;
-      setDateInputValue(`${transformedDay}.${transformedMonth}.${date.getFullYear()}`);
+  const processAndSetIntervalDates = useCallback(
+    (dateString: string) => {
+      if (!intervalDates.fromDate) {
+        setIntervalDates({ ...intervalDates, fromDate: dateString });
+        return;
+      }
+
+      const clickedDate: Date = formatStringToDate(dateString);
+      const fromDate: Date = formatStringToDate(intervalDates.fromDate);
+
+      if (clickedDate < fromDate) {
+        setIntervalDates({ ...intervalDates, fromDate: dateString });
+      } else {
+        setIntervalDates({ ...intervalDates, toDate: dateString });
+      }
     },
-    [date],
+    [intervalDates],
+  );
+
+  const handleDayClick = useCallback(
+    (dayString: string) => {
+      if (withInterval) {
+        processAndSetIntervalDates(dayString);
+      } else {
+        setSelectedDate(dayString);
+      }
+    },
+    [withInterval, processAndSetIntervalDates],
   );
 
   return (
@@ -46,7 +65,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({
       <StyledContainer>
         <Input
           label={inputLabel}
-          value={dateInputValue}
+          value={selectedDate}
           placeholder={inputPlaceholder}
           onChange={handleInputChanges}
           onCalendarClick={handleCalendarClick}
@@ -54,7 +73,8 @@ const DatePicker: React.FC<IDatePickerProps> = ({
         {isShowCalendar && (
           <Calendar
             date={date}
-            selectedDate={dateInputValue || null}
+            selectedDate={selectedDate || null}
+            interval={intervalDates}
             withOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
             onDateClick={handleDayClick}
             onDateChange={setDate}

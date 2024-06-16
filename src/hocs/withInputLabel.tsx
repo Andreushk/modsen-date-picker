@@ -1,4 +1,4 @@
-import { IDatePickerProps } from '@/components/DatePicker/DatePicker';
+import { IDatePickerProps } from '@/components/DatePicker/types';
 
 const withInputLabel =
   (label: string) =>
