@@ -12,6 +12,7 @@ interface IComponentProps {
 }
 
 const TitleWithControls: React.FC<IComponentProps> = ({ month, year, onDateSwitch }) => {
+  console.log('Render in Controls');
   const handleNextButtonClick = (): void => {
     onDateSwitch(new Date(year, month + 1));
   };
@@ -33,4 +34,4 @@ const TitleWithControls: React.FC<IComponentProps> = ({ month, year, onDateSwitc
   );
 };
 
-export default TitleWithControls;
+export default React.memo(TitleWithControls);

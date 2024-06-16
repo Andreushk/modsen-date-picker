@@ -27,6 +27,10 @@ const DatePicker: React.FC<IDatePickerProps> = ({
     setIsShowCalendar((prevState) => !prevState);
   }, []);
 
+  const handleCancelButtonClick = useCallback((): void => {
+    setDateInputValue('');
+  }, []);
+
   const handleDayClick = useCallback(
     (day: string) => {
       const monthIndex: string = String(date.getMonth() + 1);
@@ -54,6 +58,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({
             withOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
             onDateClick={handleDayClick}
             onDateChange={setDate}
+            onCancelClick={handleCancelButtonClick}
           />
         )}
       </StyledContainer>

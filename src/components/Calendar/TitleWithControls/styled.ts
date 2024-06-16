@@ -6,6 +6,8 @@ export const StyledContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   height: ${({ theme }) => theme.heights.calendarDay};
+  padding: ${({ theme }) => theme.spaces[1]};
+  padding-bottom: 0;
 
   & > button:last-of-type {
     transform: rotate(180deg);

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import getCalendarDates from '@/utils/helpers/getCalendarDates';
 import getParentDataAttribute from '@/utils/helpers/getParentDataAttribute';
@@ -14,6 +14,7 @@ interface IComponentProps {
 }
 
 const CalendarTable: React.FC<IComponentProps> = ({ date, selectedDate, onDateClick }) => {
+  console.log('Render in Table');
   const calendarDates: Date[] = useMemo(
     () => getCalendarDates(date.getFullYear(), date.getMonth()),
     [date],
@@ -69,4 +70,4 @@ const CalendarTable: React.FC<IComponentProps> = ({ date, selectedDate, onDateCl
   );
 };
 
-export default CalendarTable;
+export default React.memo(CalendarTable);
