@@ -9,7 +9,7 @@ interface IComponentProps {
   placeholder: string | undefined;
   value: string;
   onChange: (newValue: string) => void;
-  onCalendarClick: () => void;
+  onCalendarIconClick: () => void;
 }
 
 const Input: React.FC<IComponentProps> = ({
@@ -17,7 +17,7 @@ const Input: React.FC<IComponentProps> = ({
   value,
   placeholder,
   onChange,
-  onCalendarClick,
+  onCalendarIconClick,
 }) => {
   const inputId: string = useId();
 
@@ -29,7 +29,7 @@ const Input: React.FC<IComponentProps> = ({
         value={value}
         placeholder={placeholder}
         onChange={onChange}
-        onCalendarClick={onCalendarClick}
+        onCalendarClick={onCalendarIconClick}
       />
     </StyledContainer>
   );

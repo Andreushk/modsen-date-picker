@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spaces[4]};
   width: ${({ theme }) => theme.widths.calendar};
   margin: 300px auto;
+
+  & > div:first-of-type {
+    z-index: ${({ theme }) => theme.zIndexes[2]};
+  }
 `;
 
 export default StyledContainer;

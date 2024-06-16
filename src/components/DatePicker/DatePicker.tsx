@@ -1,60 +1,61 @@
 import { useCallback, useState } from 'react';
 
-import { Calendar, Input, ThemeProvider } from '@/components';
+import { ThemeProvider } from '@/components';
 import { formatStringToDate } from '@/utils/helpers';
 
+import DatePickerItem from './DatePickerItem/DatePickerItem';
 import StyledContainer from './styled';
-import { IDatePickerProps, IIntervalDates } from './types';
+import { CalendarTypes, IDatePickerProps, IIntervalDates } from './types';
 
 const DatePicker: React.FC<IDatePickerProps> = ({
   inputLabel,
   inputPlaceholder,
+  toInputLabel,
+  toInputPlaceholder,
   withCalendarOpeningAnimation,
   withInterval,
 }) => {
-  const [date, setDate] = useState<Date>(() => new Date());
-  const [selectedDate, setSelectedDate] = useState<string>('');
-  const [intervalDates, setIntervalDates] = useState<IIntervalDates>({ fromDate: '', toDate: '' });
-  const [isShowCalendar, setIsShowCalendar] = useState<boolean>(false);
+  const [calendarDate, setCalendarDate] = useState<Date>(() => new Date());
+  const [intervals, setIntervals] = useState<IIntervalDates>({ fromDate: '', toDate: '' });
+  const [showingCalendarType, setShowingCalendarType] = useState<CalendarTypes>(null);
 
-  const handleInputChanges = useCallback((newValue: string): void => {
-    setSelectedDate(newValue);
+  const handleInputChanges = useCallback((enteredDate: string): void => {
+    setIntervals({ fromDate: enteredDate, toDate: '' });
   }, []);
 
-  const handleCalendarClick = useCallback((): void => {
-    setIsShowCalendar((prevState) => !prevState);
+  const handleCalendarOpen = useCallback((calendarType: CalendarTypes): void => {
+    setShowingCalendarType(calendarType);
   }, []);
 
-  const handleCancelButtonClick = useCallback((): void => {
-    setSelectedDate('');
-    setIntervalDates({ fromDate: '', toDate: '' });
+  const handleCalendarReset = useCallback((): void => {
+    setIntervals({ fromDate: '', toDate: '' });
   }, []);
 
   const processAndSetIntervalDates = useCallback(
     (dateString: string) => {
-      if (!intervalDates.fromDate) {
-        setIntervalDates({ ...intervalDates, fromDate: dateString });
+      if (!intervals.fromDate) {
+        setIntervals({ ...intervals, fromDate: dateString });
         return;
       }
 
       const clickedDate: Date = formatStringToDate(dateString);
-      const fromDate: Date = formatStringToDate(intervalDates.fromDate);
+      const fromDate: Date = formatStringToDate(intervals.fromDate);
 
       if (clickedDate < fromDate) {
-        setIntervalDates({ ...intervalDates, fromDate: dateString });
+        setIntervals({ ...intervals, fromDate: dateString });
       } else {
-        setIntervalDates({ ...intervalDates, toDate: dateString });
+        setIntervals({ ...intervals, toDate: dateString });
       }
     },
-    [intervalDates],
+    [intervals],
   );
 
   const handleDayClick = useCallback(
-    (dayString: string) => {
+    (dateString: string) => {
       if (withInterval) {
-        processAndSetIntervalDates(dayString);
+        processAndSetIntervalDates(dateString);
       } else {
-        setSelectedDate(dayString);
+        setIntervals({ fromDate: dateString, toDate: '' });
       }
     },
     [withInterval, processAndSetIntervalDates],
@@ -63,22 +64,36 @@ const DatePicker: React.FC<IDatePickerProps> = ({
   return (
     <ThemeProvider>
       <StyledContainer>
-        <Input
-          label={inputLabel}
-          value={selectedDate}
-          placeholder={inputPlaceholder}
-          onChange={handleInputChanges}
-          onCalendarClick={handleCalendarClick}
+        <DatePickerItem
+          type="from"
+          inputLabel={inputLabel}
+          inputPlaceholder={inputPlaceholder}
+          isShowCalendar={showingCalendarType === 'from'}
+          calendarDate={calendarDate}
+          selectedDate={withInterval ? null : intervals.fromDate}
+          intervals={intervals}
+          withCalendarOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
+          onDateChange={setCalendarDate}
+          onCalendarDayClick={handleDayClick}
+          onInputChanges={handleInputChanges}
+          onCalendarIconClick={handleCalendarOpen}
+          onCancelButtonClick={handleCalendarReset}
         />
-        {isShowCalendar && (
-          <Calendar
-            date={date}
-            selectedDate={selectedDate || null}
-            interval={intervalDates}
-            withOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
-            onDateClick={handleDayClick}
-            onDateChange={setDate}
-            onCancelClick={handleCancelButtonClick}
+        {withInterval && (
+          <DatePickerItem
+            type="to"
+            selectedDate={null}
+            inputLabel={toInputLabel}
+            inputPlaceholder={toInputPlaceholder}
+            isShowCalendar={showingCalendarType === 'to'}
+            calendarDate={calendarDate}
+            intervals={intervals}
+            withCalendarOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
+            onDateChange={setCalendarDate}
+            onCalendarDayClick={handleDayClick}
+            onInputChanges={handleInputChanges}
+            onCalendarIconClick={handleCalendarOpen}
+            onCancelButtonClick={handleCalendarReset}
           />
         )}
       </StyledContainer>

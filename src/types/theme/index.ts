@@ -13,6 +13,7 @@ interface IColors {
   };
   backgrounds: {
     hoveredCalendarItem: string;
+    default: string;
   };
 }
 

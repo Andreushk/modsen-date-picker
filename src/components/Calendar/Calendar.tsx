@@ -7,7 +7,7 @@ import StyledContainer from './styled';
 import TitleWithControls from './TitleWithControls/TitleWithControls';
 
 interface IComponentProps {
-  date: Date;
+  calendarDate: Date;
   selectedDate: string | null;
   interval: IIntervalDates;
   withOpeningAnimation: boolean;
@@ -17,7 +17,7 @@ interface IComponentProps {
 }
 
 const Calendar: React.FC<IComponentProps> = ({
-  date,
+  calendarDate,
   selectedDate,
   interval,
   withOpeningAnimation,
@@ -38,12 +38,12 @@ const Calendar: React.FC<IComponentProps> = ({
   return (
     <StyledContainer $isVisible={isVisible} $isWithCancelButton={isSomethingSelected}>
       <TitleWithControls
-        month={date.getMonth()}
-        year={date.getFullYear()}
+        month={calendarDate.getMonth()}
+        year={calendarDate.getFullYear()}
         onDateSwitch={onDateChange}
       />
       <CalendarTable
-        date={date}
+        calendarDate={calendarDate}
         selectedDate={selectedDate}
         interval={interval}
         onDateClick={onDateClick}

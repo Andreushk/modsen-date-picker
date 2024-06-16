@@ -6,6 +6,7 @@ const theme: ITheme = {
     '8px', // 1
     '10px', // 2
     '16px', // 3
+    '30px', // 4
   ],
   colors: {
     primary: '#2F80ED',
@@ -22,6 +23,7 @@ const theme: ITheme = {
     },
     backgrounds: {
       hoveredCalendarItem: '#f1f1f1',
+      default: '#ffffff',
     },
   },
   widths: {

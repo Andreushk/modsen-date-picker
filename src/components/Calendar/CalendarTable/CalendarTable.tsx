@@ -15,21 +15,21 @@ import StyledTable from './styled';
 import TableHead from './TableHead/TableHead';
 
 interface IComponentProps {
-  date: Date;
+  calendarDate: Date;
   selectedDate: string | null;
   interval: IIntervalDates;
   onDateClick: (day: string) => void;
 }
 
 const CalendarTable: React.FC<IComponentProps> = ({
-  date,
+  calendarDate,
   selectedDate,
   interval,
   onDateClick,
 }) => {
   const calendarDates: Date[] = useMemo(
-    (): Date[] => getCalendarDates(date.getFullYear(), date.getMonth()),
-    [date],
+    (): Date[] => getCalendarDates(calendarDate.getFullYear(), calendarDate.getMonth()),
+    [calendarDate],
   );
 
   const weeks: Date[][] = useMemo((): Date[][] => {
@@ -57,8 +57,8 @@ const CalendarTable: React.FC<IComponentProps> = ({
 
     if (selectedDate) {
       const isSelectedDay = Number(selectedDate?.slice(0, 2)) === weekDate.getDate();
-      const isSelectedDayMonth = Number(selectedDate?.slice(4, 6)) - 1 === date.getMonth();
-      const isSelectedDayYear = Number(selectedDate?.slice(6)) === date.getFullYear();
+      const isSelectedDayMonth = Number(selectedDate?.slice(4, 6)) - 1 === calendarDate.getMonth();
+      const isSelectedDayYear = Number(selectedDate?.slice(6)) === calendarDate.getFullYear();
       return isSelectedDay && isSelectedDayMonth && isSelectedDayYear ? 'selected' : 'default';
     }
 
@@ -73,7 +73,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
 
     if (clickedElement) {
       const day: string | null = getParentDataAttribute(clickedElement, 'data-day');
-      if (day) onDateClick(formatDateToString(day, date));
+      if (day) onDateClick(formatDateToString(day, calendarDate));
     }
   };
 
@@ -84,7 +84,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
         {weeks.map((week, i) => (
           <tr key={i}>
             {week.map((weekDate) => {
-              const isCurrentMonth: boolean = weekDate.getMonth() === date.getMonth();
+              const isCurrentMonth: boolean = weekDate.getMonth() === calendarDate.getMonth();
               const dayCellVariant: DayCellTypes = getCellStatus(weekDate);
               return (
                 <DayCell

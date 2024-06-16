@@ -36,6 +36,7 @@ const GlobalStyles = createGlobalStyle`
   padding: 0;
 }
 
+
 body {
   font-family: "Open Sans", "Verdana", "Geneva", "Tahoma", sans-serif;
   background-color: #fff;
