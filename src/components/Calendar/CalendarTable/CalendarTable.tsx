@@ -18,6 +18,7 @@ interface IComponentProps {
   calendarDate: Date;
   selectedDate: string | null;
   interval: IIntervalDates;
+  dateRestrictions: [Date, Date] | undefined;
   onDateClick: (day: string) => void;
 }
 
@@ -25,6 +26,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
   calendarDate,
   selectedDate,
   interval,
+  dateRestrictions,
   onDateClick,
 }) => {
   const calendarDates: Date[] = useMemo(
@@ -51,6 +53,12 @@ const CalendarTable: React.FC<IComponentProps> = ({
     () => (interval.toDate ? formatStringToDate(interval.toDate) : null),
     [interval],
   );
+
+  const isRestrictedDate = (weekDate: Date): boolean => {
+    if (!dateRestrictions) return false;
+    const [fromRestriction, toRestriction] = dateRestrictions;
+    return !(weekDate >= fromRestriction && weekDate <= toRestriction);
+  };
 
   const getCellStatus = (weekDate: Date): DayCellTypes => {
     if (!selectedDate && !from && !to) return 'default';
@@ -85,13 +93,14 @@ const CalendarTable: React.FC<IComponentProps> = ({
           <tr key={i}>
             {week.map((weekDate) => {
               const isCurrentMonth: boolean = weekDate.getMonth() === calendarDate.getMonth();
+              const isOverDateRestriction: boolean = isRestrictedDate(weekDate);
               const dayCellVariant: DayCellTypes = getCellStatus(weekDate);
               return (
                 <DayCell
                   key={weekDate.getDate()}
                   day={weekDate.getDate()}
                   variant={dayCellVariant}
-                  disabled={!isCurrentMonth}
+                  disabled={!isCurrentMonth || isOverDateRestriction}
                 />
               );
             })}

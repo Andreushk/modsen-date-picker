@@ -11,6 +11,7 @@ interface IComponentProps {
   selectedDate: string | null;
   interval: IIntervalDates;
   withOpeningAnimation: boolean;
+  dateRestrictions: [Date, Date] | undefined;
   onDateClick: (day: string) => void;
   onDateChange: (newDate: Date) => void;
   onCancelClick: () => void;
@@ -21,6 +22,7 @@ const Calendar: React.FC<IComponentProps> = ({
   selectedDate,
   interval,
   withOpeningAnimation,
+  dateRestrictions,
   onDateClick,
   onDateChange,
   onCancelClick,
@@ -46,6 +48,7 @@ const Calendar: React.FC<IComponentProps> = ({
       onClick={handleCalendarClick}
     >
       <TitleWithControls
+        dateRestrictions={dateRestrictions}
         month={calendarDate.getMonth()}
         year={calendarDate.getFullYear()}
         onDateSwitch={onDateChange}
@@ -54,6 +57,7 @@ const Calendar: React.FC<IComponentProps> = ({
         calendarDate={calendarDate}
         selectedDate={selectedDate}
         interval={interval}
+        dateRestrictions={dateRestrictions}
         onDateClick={onDateClick}
       />
       {isSomethingSelected && <CancelButton onClick={onCancelClick} />}

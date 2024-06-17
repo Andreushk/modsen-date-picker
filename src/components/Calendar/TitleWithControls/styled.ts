@@ -20,25 +20,3 @@ export const StyledTitle = styled.h6`
   line-height: ${({ theme }) => theme.lineHeights.calendarTitle};
   color: ${({ theme }) => theme.colors.text.calendarTitle};
 `;
-
-export const StyledControlButton = styled.button`
-  cursor: pointer;
-  width: ${({ theme }) => theme.widths.calendarDay};
-  height: ${({ theme }) => theme.heights.calendarDay};
-  border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
-  background-color: inherit;
-  border: none;
-  text-align: left;
-
-  & > svg {
-    fill: ${({ theme }) => theme.colors.text.calendarTitle};
-    transition: ${({ theme }) => theme.durations.quick} ease;
-  }
-
-  &:hover {
-    & svg {
-      scale: 1.2;
-      transition: ${({ theme }) => theme.durations.quick} ease;
-    }
-  }
-`;

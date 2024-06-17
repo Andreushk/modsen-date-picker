@@ -5,5 +5,6 @@ export {
   withInterval,
   withDefaultDate,
   withDefaultIntervalDates,
+  withDatesRestrictions,
 } from '@/hocs';
 export { CalendarService } from '@/services';

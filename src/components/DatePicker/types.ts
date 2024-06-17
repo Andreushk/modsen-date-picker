@@ -1,3 +1,4 @@
+type DateRestrictionsType = [Date, Date];
 export interface IDatePickerProps {
   inputLabel: string | undefined;
   toInputLabel: string | undefined;
@@ -7,6 +8,7 @@ export interface IDatePickerProps {
   toInputDefaultDateValue: string | undefined;
   withCalendarOpeningAnimation: boolean | undefined;
   withInterval: boolean | undefined;
+  dateRestrictions: DateRestrictionsType | undefined;
 }
 
 export interface IIntervalDates {

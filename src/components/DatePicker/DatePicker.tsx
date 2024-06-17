@@ -15,6 +15,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({
   inputDefaultDateValue,
   toInputDefaultDateValue,
   withCalendarOpeningAnimation,
+  dateRestrictions,
   withInterval,
 }) => {
   const [calendarDate, setCalendarDate] = useState<Date>(() => new Date());
@@ -94,6 +95,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({
           selectedDate={withInterval ? null : intervals.fromDate}
           intervals={intervals}
           withCalendarOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
+          dateRestrictions={dateRestrictions}
           onDateChange={setCalendarDate}
           onCalendarDayClick={handleDayClick}
           onInputChanges={handleInputChanges}
@@ -110,6 +112,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({
             calendarDate={calendarDate}
             intervals={intervals}
             withCalendarOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
+            dateRestrictions={dateRestrictions}
             onDateChange={setCalendarDate}
             onCalendarDayClick={handleDayClick}
             onInputChanges={handleInputChanges}

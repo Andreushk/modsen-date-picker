@@ -4,3 +4,4 @@ export { default as withCalendarOpeningAnimation } from './withCalendarOpeningAn
 export { default as withInterval } from './withInterval';
 export { default as withDefaultDate } from './withDefaultDate';
 export { default as withDefaultIntervalDates } from './withDefaultIntervalDates';
+export { default as withDatesRestrictions } from './withDatesRestrictions';

@@ -16,6 +16,7 @@ interface IComponentProps {
   selectedDate: string | null;
   intervals: IIntervalDates;
   withCalendarOpeningAnimation: boolean;
+  dateRestrictions: [Date, Date] | undefined;
   onDateChange: (newDate: Date) => void;
   onCalendarDayClick: (clickedDate: string) => void;
   onInputChanges: (enteredDate: string, datePickerType: DatePickerType) => void;
@@ -32,6 +33,7 @@ const DatePickerItem: React.FC<IComponentProps> = ({
   selectedDate,
   intervals,
   withCalendarOpeningAnimation,
+  dateRestrictions,
   onDateChange,
   onCalendarDayClick,
   onCalendarIconClick,
@@ -73,6 +75,7 @@ const DatePickerItem: React.FC<IComponentProps> = ({
             selectedDate={selectedDate}
             interval={intervals}
             withOpeningAnimation={withCalendarOpeningAnimation}
+            dateRestrictions={dateRestrictions}
             onDateClick={onCalendarDayClick}
             onDateChange={onDateChange}
             onCancelClick={onCancelButtonClick}
