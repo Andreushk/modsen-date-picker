@@ -19,11 +19,11 @@ const DatePicker: React.FC<IDatePickerProps> = ({
   withInterval,
 }) => {
   const [calendarDate, setCalendarDate] = useState<Date>(() => new Date());
+  const [showingCalendarType, setShowingCalendarType] = useState<CalendarTypes>(null);
   const [intervals, setIntervals] = useState<IIntervalDates>({
     fromDate: inputDefaultDateValue ?? '',
     toDate: toInputDefaultDateValue ?? '',
   });
-  const [showingCalendarType, setShowingCalendarType] = useState<CalendarTypes>(null);
 
   const handleInputChanges = useCallback(
     (date: string, type: DatePickerType): void => {
