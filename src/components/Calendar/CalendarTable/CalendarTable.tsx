@@ -18,6 +18,7 @@ interface IComponentProps {
   calendarDate: Date;
   selectedDate: string | null;
   interval: IIntervalDates;
+  isStartsFromSunday: boolean;
   dateRestrictions: [Date, Date] | undefined;
   onDateClick: (day: string) => void;
 }
@@ -26,12 +27,14 @@ const CalendarTable: React.FC<IComponentProps> = ({
   calendarDate,
   selectedDate,
   interval,
+  isStartsFromSunday,
   dateRestrictions,
   onDateClick,
 }) => {
   const calendarDates: Date[] = useMemo(
-    (): Date[] => getCalendarDates(calendarDate.getFullYear(), calendarDate.getMonth()),
-    [calendarDate],
+    (): Date[] =>
+      getCalendarDates(calendarDate.getFullYear(), calendarDate.getMonth(), isStartsFromSunday),
+    [calendarDate, isStartsFromSunday],
   );
 
   const weeks: Date[][] = useMemo((): Date[][] => {
@@ -87,7 +90,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
 
   return (
     <StyledTable>
-      <TableHead />
+      <TableHead isStartsFromSunday={isStartsFromSunday} />
       <tbody onClick={handleDayClick}>
         {weeks.map((week, i) => (
           <tr key={i}>

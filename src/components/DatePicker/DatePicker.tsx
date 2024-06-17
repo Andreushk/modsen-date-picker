@@ -15,6 +15,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({
   inputDefaultDateValue,
   toInputDefaultDateValue,
   withCalendarOpeningAnimation,
+  isWeeksStartsFromSunday,
   dateRestrictions,
   withInterval,
 }) => {
@@ -95,6 +96,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({
           selectedDate={withInterval ? null : intervals.fromDate}
           intervals={intervals}
           withCalendarOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
+          isWeeksStartsFromSunday={Boolean(isWeeksStartsFromSunday)}
           dateRestrictions={dateRestrictions}
           onDateChange={setCalendarDate}
           onCalendarDayClick={handleDayClick}
@@ -112,6 +114,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({
             calendarDate={calendarDate}
             intervals={intervals}
             withCalendarOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
+            isWeeksStartsFromSunday={Boolean(isWeeksStartsFromSunday)}
             dateRestrictions={dateRestrictions}
             onDateChange={setCalendarDate}
             onCalendarDayClick={handleDayClick}

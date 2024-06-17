@@ -11,6 +11,7 @@ interface IComponentProps {
   selectedDate: string | null;
   interval: IIntervalDates;
   withOpeningAnimation: boolean;
+  isStartsFromSunday: boolean;
   dateRestrictions: [Date, Date] | undefined;
   onDateClick: (day: string) => void;
   onDateChange: (newDate: Date) => void;
@@ -21,6 +22,7 @@ const Calendar: React.FC<IComponentProps> = ({
   calendarDate,
   selectedDate,
   interval,
+  isStartsFromSunday,
   withOpeningAnimation,
   dateRestrictions,
   onDateClick,
@@ -57,6 +59,7 @@ const Calendar: React.FC<IComponentProps> = ({
         calendarDate={calendarDate}
         selectedDate={selectedDate}
         interval={interval}
+        isStartsFromSunday={isStartsFromSunday}
         dateRestrictions={dateRestrictions}
         onDateClick={onDateClick}
       />

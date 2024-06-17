@@ -7,6 +7,7 @@ export interface IDatePickerProps {
   inputDefaultDateValue: string | undefined;
   toInputDefaultDateValue: string | undefined;
   withCalendarOpeningAnimation: boolean | undefined;
+  isWeeksStartsFromSunday: boolean | undefined;
   withInterval: boolean | undefined;
   dateRestrictions: DateRestrictionsType | undefined;
 }
