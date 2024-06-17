@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+
+import { generateCalendar } from '@/utils/helpers';
 
 import { IIntervalDates } from '../DatePicker/types';
 import CalendarTable from './CalendarTable/CalendarTable';
@@ -12,6 +14,7 @@ interface IComponentProps {
   interval: IIntervalDates;
   withOpeningAnimation: boolean;
   isStartsFromSunday: boolean;
+  isWeeksCalendar: boolean;
   dateRestrictions: [Date, Date] | undefined;
   onDateClick: (day: string) => void;
   onDateChange: (newDate: Date) => void;
@@ -23,6 +26,7 @@ const Calendar: React.FC<IComponentProps> = ({
   selectedDate,
   interval,
   isStartsFromSunday,
+  isWeeksCalendar,
   withOpeningAnimation,
   dateRestrictions,
   onDateClick,
@@ -34,6 +38,26 @@ const Calendar: React.FC<IComponentProps> = ({
   useEffect((): void => {
     setIsVisible(true);
   }, []);
+
+  const calendarDates: Date[] = useMemo(
+    (): Date[] =>
+      generateCalendar(isWeeksCalendar ? 'week' : 'month', calendarDate, isStartsFromSunday),
+    [calendarDate, isStartsFromSunday, isWeeksCalendar],
+  );
+
+  const calendarWeeksData: Date[][] = useMemo((): Date[][] => {
+    const weeksArray = [];
+
+    if (!isWeeksCalendar) {
+      for (let i = 0; i < calendarDates.length; i += 7) {
+        weeksArray.push(calendarDates.slice(i, i + 7));
+      }
+    } else {
+      weeksArray.push(calendarDates);
+    }
+
+    return weeksArray;
+  }, [calendarDates, isWeeksCalendar]);
 
   const handleCalendarClick = (e: React.MouseEvent): void => {
     e.stopPropagation();
@@ -50,12 +74,13 @@ const Calendar: React.FC<IComponentProps> = ({
       onClick={handleCalendarClick}
     >
       <TitleWithControls
-        dateRestrictions={dateRestrictions}
-        month={calendarDate.getMonth()}
-        year={calendarDate.getFullYear()}
+        calendarDate={calendarDate}
+        restrictions={dateRestrictions}
+        isWeeksCalendar={isWeeksCalendar}
         onDateSwitch={onDateChange}
       />
       <CalendarTable
+        calendarData={calendarWeeksData}
         calendarDate={calendarDate}
         selectedDate={selectedDate}
         interval={interval}

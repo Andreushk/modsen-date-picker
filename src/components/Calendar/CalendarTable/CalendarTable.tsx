@@ -5,7 +5,6 @@ import {
   checkIsSameDate,
   formatDateToString,
   formatStringToDate,
-  getCalendarDates,
   getParentDataAttribute,
 } from '@/utils/helpers';
 
@@ -16,6 +15,7 @@ import TableHead from './TableHead/TableHead';
 
 interface IComponentProps {
   calendarDate: Date;
+  calendarData: Date[][];
   selectedDate: string | null;
   interval: IIntervalDates;
   isStartsFromSunday: boolean;
@@ -25,28 +25,13 @@ interface IComponentProps {
 
 const CalendarTable: React.FC<IComponentProps> = ({
   calendarDate,
+  calendarData,
   selectedDate,
   interval,
   isStartsFromSunday,
   dateRestrictions,
   onDateClick,
 }) => {
-  const calendarDates: Date[] = useMemo(
-    (): Date[] =>
-      getCalendarDates(calendarDate.getFullYear(), calendarDate.getMonth(), isStartsFromSunday),
-    [calendarDate, isStartsFromSunday],
-  );
-
-  const weeks: Date[][] = useMemo((): Date[][] => {
-    const weeksArray = [];
-
-    for (let i = 0; i < calendarDates.length; i += 7) {
-      weeksArray.push(calendarDates.slice(i, i + 7));
-    }
-
-    return weeksArray;
-  }, [calendarDates]);
-
   const from: Date | null = useMemo(
     () => (interval.fromDate ? formatStringToDate(interval.fromDate) : null),
     [interval],
@@ -67,9 +52,9 @@ const CalendarTable: React.FC<IComponentProps> = ({
     if (!selectedDate && !from && !to) return 'default';
 
     if (selectedDate) {
-      const isSelectedDay = Number(selectedDate?.slice(0, 2)) === weekDate.getDate();
-      const isSelectedDayMonth = Number(selectedDate?.slice(4, 6)) - 1 === calendarDate.getMonth();
-      const isSelectedDayYear = Number(selectedDate?.slice(6)) === calendarDate.getFullYear();
+      const isSelectedDay = Number(selectedDate.slice(0, 2)) === weekDate.getDate();
+      const isSelectedDayMonth = Number(selectedDate.slice(3, 5)) - 1 === calendarDate.getMonth();
+      const isSelectedDayYear = Number(selectedDate.slice(6)) === calendarDate.getFullYear();
       return isSelectedDay && isSelectedDayMonth && isSelectedDayYear ? 'selected' : 'default';
     }
 
@@ -92,7 +77,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
     <StyledTable>
       <TableHead isStartsFromSunday={isStartsFromSunday} />
       <tbody onClick={handleDayClick}>
-        {weeks.map((week, i) => (
+        {calendarData.map((week, i) => (
           <tr key={i}>
             {week.map((weekDate) => {
               const isCurrentMonth: boolean = weekDate.getMonth() === calendarDate.getMonth();

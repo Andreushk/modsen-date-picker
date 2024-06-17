@@ -1,42 +1,64 @@
 import React from 'react';
 
 import MONTHS from '@/constants/months';
+import { extractDateParts, getWeekStartDate } from '@/utils/helpers';
 
 import DateSwitchingButton from './DateSwitchingButton/DateSwitchingButton';
 import { StyledContainer, StyledTitle } from './styled';
 
 interface IComponentProps {
-  month: number;
-  year: number;
-  dateRestrictions: [Date, Date] | undefined;
+  calendarDate: Date;
+  restrictions: [Date, Date] | undefined;
+  isWeeksCalendar: boolean;
   onDateSwitch: (newDate: Date) => void;
 }
 
 const TitleWithControls: React.FC<IComponentProps> = ({
-  month,
-  year,
-  dateRestrictions,
+  calendarDate,
+  restrictions,
+  isWeeksCalendar,
   onDateSwitch,
 }) => {
+  const { year, month, day } = extractDateParts(calendarDate);
+
   const handleNextButtonClick = (): void => {
-    onDateSwitch(new Date(year, month + 1));
+    if (isWeeksCalendar) {
+      onDateSwitch(new Date(year, month, day + 7));
+    } else {
+      onDateSwitch(new Date(year, month + 1));
+    }
   };
 
   const handlePrevButtonClick = (): void => {
-    onDateSwitch(new Date(year, month - 1));
+    if (isWeeksCalendar) {
+      onDateSwitch(new Date(year, month, day - 7));
+    } else {
+      onDateSwitch(new Date(year, month - 1));
+    }
   };
 
   const isButtonsDisabled = (): [boolean, boolean] => {
-    if (!dateRestrictions) return [false, false];
+    if (!restrictions) return [false, false];
 
-    const [fromRestriction, toRestriction] = dateRestrictions;
-    const fromYear: number = fromRestriction.getFullYear();
-    const fromMonth: number = fromRestriction.getMonth();
-    const toYear: number = toRestriction.getFullYear();
-    const toMonth: number = toRestriction.getMonth();
+    const [fromRestriction, toRestriction] = restrictions;
+    const { year: fromYear, month: fromMonth } = extractDateParts(fromRestriction);
+    const { year: toYear, month: toMonth } = extractDateParts(toRestriction);
 
-    const isPrevButtonDisabled = year < fromYear || (year === fromYear && month < fromMonth + 1);
-    const isNextButtonDisabled = year > toYear || (year === toYear && month > toMonth - 1);
+    let isPrevButtonDisabled: boolean = false;
+    let isNextButtonDisabled: boolean = false;
+
+    if (!isWeeksCalendar) {
+      isPrevButtonDisabled = year < fromYear || (year === fromYear && month <= fromMonth);
+      isNextButtonDisabled = year > toYear || (year === toYear && month >= toMonth);
+    } else {
+      const startOfWeek: Date = getWeekStartDate(calendarDate);
+      const endOfWeek: Date = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+      isPrevButtonDisabled = startOfWeek < fromRestriction;
+      isNextButtonDisabled = endOfWeek > toRestriction;
+    }
+
     return [isPrevButtonDisabled, isNextButtonDisabled];
   };
 

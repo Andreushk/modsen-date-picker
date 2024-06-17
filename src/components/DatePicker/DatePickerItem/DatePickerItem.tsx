@@ -18,6 +18,7 @@ interface IComponentProps {
   withCalendarOpeningAnimation: boolean;
   dateRestrictions: [Date, Date] | undefined;
   isWeeksStartsFromSunday: boolean;
+  isWeeksCalendar: boolean;
   onDateChange: (newDate: Date) => void;
   onCalendarDayClick: (clickedDate: string) => void;
   onInputChanges: (enteredDate: string, datePickerType: DatePickerType) => void;
@@ -35,6 +36,7 @@ const DatePickerItem: React.FC<IComponentProps> = ({
   intervals,
   withCalendarOpeningAnimation,
   isWeeksStartsFromSunday,
+  isWeeksCalendar,
   dateRestrictions,
   onDateChange,
   onCalendarDayClick,
@@ -77,6 +79,7 @@ const DatePickerItem: React.FC<IComponentProps> = ({
             selectedDate={selectedDate}
             interval={intervals}
             isStartsFromSunday={isWeeksStartsFromSunday}
+            isWeeksCalendar={isWeeksCalendar}
             withOpeningAnimation={withCalendarOpeningAnimation}
             dateRestrictions={dateRestrictions}
             onDateClick={onCalendarDayClick}

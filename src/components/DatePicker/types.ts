@@ -10,6 +10,7 @@ export interface IDatePickerProps {
   isWeeksStartsFromSunday: boolean | undefined;
   withInterval: boolean | undefined;
   dateRestrictions: DateRestrictionsType | undefined;
+  isWeeksCalendar: boolean | undefined;
 }
 
 export interface IIntervalDates {

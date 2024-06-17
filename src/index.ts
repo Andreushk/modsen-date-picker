@@ -7,5 +7,6 @@ export {
   withDefaultIntervalDates,
   withDatesRestrictions,
   withWeeksFromSunday,
+  withWeeksCalendar,
 } from '@/hocs';
 export { CalendarService } from '@/services';
