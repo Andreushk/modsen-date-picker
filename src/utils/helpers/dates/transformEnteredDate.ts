@@ -1,5 +1,5 @@
 function transformEnteredDate(inputDateValue: string, initialDate: string): string {
-  let date = inputDateValue.trim().replace(/[^0-9.]/g, '');
+  let date = inputDateValue.trim().replace(/[^0-9/]/g, '');
 
   if (date.length > 10) {
     return initialDate;
@@ -17,8 +17,8 @@ function transformEnteredDate(inputDateValue: string, initialDate: string): stri
       date = `31`;
     }
   } else if (date.length > 2 && date.length <= 5) {
-    if (date[2] !== '.') {
-      date = `${date.slice(0, 2)}.${date.slice(2)}`;
+    if (date[2] !== '/') {
+      date = `${date.slice(0, 2)}/${date.slice(2)}`;
     }
     const month = parseInt(date.slice(3, 5));
     if (month > 1 && month < 10) {
@@ -27,11 +27,11 @@ function transformEnteredDate(inputDateValue: string, initialDate: string): stri
       date = `${date.slice(0, 3)}12`;
     }
   } else if (date.length > 5 && date.length <= 10) {
-    if (date[2] !== '.') {
-      date = `${date.slice(0, 2)}.${date.slice(2)}`;
+    if (date[2] !== '/') {
+      date = `${date.slice(0, 2)}/${date.slice(2)}`;
     }
-    if (date[5] !== '.') {
-      date = `${date.slice(0, 5)}.${date.slice(5)}`;
+    if (date[5] !== '/') {
+      date = `${date.slice(0, 5)}/${date.slice(5)}`;
     }
   }
 
