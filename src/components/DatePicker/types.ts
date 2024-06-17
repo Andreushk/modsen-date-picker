@@ -3,6 +3,8 @@ export interface IDatePickerProps {
   toInputLabel: string | undefined;
   inputPlaceholder: string | undefined;
   toInputPlaceholder: string | undefined;
+  inputDefaultDateValue: string | undefined;
+  toInputDefaultDateValue: string | undefined;
   withCalendarOpeningAnimation: boolean | undefined;
   withInterval: boolean | undefined;
 }
