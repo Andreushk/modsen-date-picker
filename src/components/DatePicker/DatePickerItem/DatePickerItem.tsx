@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
-import { Calendar, Input } from '@/components';
+import { Calendar, Input, OutsideClickHandler } from '@/components';
 
 import { CalendarTypes, IIntervalDates } from '../types';
 import StyledContainer from './styled';
 
+export type DatePickerType = 'from' | 'to';
+
 interface IComponentProps {
-  type: 'from' | 'to';
+  type: DatePickerType;
   inputLabel: string | undefined;
   inputPlaceholder: string | undefined;
   isShowCalendar: boolean;
@@ -16,7 +18,7 @@ interface IComponentProps {
   withCalendarOpeningAnimation: boolean;
   onDateChange: (newDate: Date) => void;
   onCalendarDayClick: (clickedDate: string) => void;
-  onInputChanges: (newInputDate: string) => void;
+  onInputChanges: (enteredDate: string, datePickerType: DatePickerType) => void;
   onCalendarIconClick: (calendarType: CalendarTypes) => void;
   onCancelButtonClick: () => void;
 }
@@ -36,35 +38,48 @@ const DatePickerItem: React.FC<IComponentProps> = ({
   onInputChanges,
   onCancelButtonClick,
 }) => {
-  const handleCalendarIconClick = (): void => {
+  const handleDateInputChanges = useCallback(
+    (enteredDate: string): void => {
+      onInputChanges(enteredDate, type);
+    },
+    [type, onInputChanges],
+  );
+
+  const handleCalendarIconClick = useCallback((): void => {
     if (type === 'from') {
       onCalendarIconClick('from');
     } else {
       onCalendarIconClick('to');
     }
-  };
+  }, [type, onCalendarIconClick]);
+
+  const handleCalendarOutsideClick = useCallback((): void => {
+    onCalendarIconClick(null);
+  }, [onCalendarIconClick]);
 
   return (
-    <StyledContainer>
-      <Input
-        label={inputLabel}
-        value={type === 'from' ? intervals.fromDate : intervals.toDate}
-        placeholder={inputPlaceholder}
-        onChange={onInputChanges}
-        onCalendarIconClick={handleCalendarIconClick}
-      />
-      {isShowCalendar && (
-        <Calendar
-          calendarDate={calendarDate}
-          selectedDate={selectedDate}
-          interval={intervals}
-          withOpeningAnimation={withCalendarOpeningAnimation}
-          onDateClick={onCalendarDayClick}
-          onDateChange={onDateChange}
-          onCancelClick={onCancelButtonClick}
+    <OutsideClickHandler onOutsideClick={handleCalendarOutsideClick}>
+      <StyledContainer>
+        <Input
+          label={inputLabel}
+          value={type === 'from' ? intervals.fromDate : intervals.toDate}
+          placeholder={inputPlaceholder}
+          onChange={handleDateInputChanges}
+          onCalendarIconClick={handleCalendarIconClick}
         />
-      )}
-    </StyledContainer>
+        {isShowCalendar && (
+          <Calendar
+            calendarDate={calendarDate}
+            selectedDate={selectedDate}
+            interval={intervals}
+            withOpeningAnimation={withCalendarOpeningAnimation}
+            onDateClick={onCalendarDayClick}
+            onDateChange={onDateChange}
+            onCancelClick={onCancelButtonClick}
+          />
+        )}
+      </StyledContainer>
+    </OutsideClickHandler>
   );
 };
 

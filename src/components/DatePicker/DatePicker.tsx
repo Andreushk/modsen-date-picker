@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { ThemeProvider } from '@/components';
 import { formatStringToDate } from '@/utils/helpers';
 
-import DatePickerItem from './DatePickerItem/DatePickerItem';
+import DatePickerItem, { DatePickerType } from './DatePickerItem/DatePickerItem';
 import StyledContainer from './styled';
 import { CalendarTypes, IDatePickerProps, IIntervalDates } from './types';
 
@@ -19,9 +19,25 @@ const DatePicker: React.FC<IDatePickerProps> = ({
   const [intervals, setIntervals] = useState<IIntervalDates>({ fromDate: '', toDate: '' });
   const [showingCalendarType, setShowingCalendarType] = useState<CalendarTypes>(null);
 
-  const handleInputChanges = useCallback((enteredDate: string): void => {
-    setIntervals({ fromDate: enteredDate, toDate: '' });
-  }, []);
+  const handleInputChanges = useCallback(
+    (date: string, type: DatePickerType): void => {
+      if (type === 'to') {
+        const enteredDate: Date = formatStringToDate(date);
+        const fromDate: Date = formatStringToDate(intervals.fromDate);
+
+        if (enteredDate < fromDate) {
+          setIntervals({ fromDate: '', toDate: date });
+          return;
+        }
+      }
+
+      setIntervals((prevIntervals) => ({
+        fromDate: type === 'from' ? date : prevIntervals.fromDate,
+        toDate: type === 'to' ? date : prevIntervals.toDate,
+      }));
+    },
+    [intervals],
+  );
 
   const handleCalendarOpen = useCallback((calendarType: CalendarTypes): void => {
     setShowingCalendarType(calendarType);

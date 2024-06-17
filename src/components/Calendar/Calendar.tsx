@@ -31,12 +31,20 @@ const Calendar: React.FC<IComponentProps> = ({
     setIsVisible(true);
   }, []);
 
+  const handleCalendarClick = (e: React.MouseEvent): void => {
+    e.stopPropagation();
+  };
+
   const isSomethingSelected: boolean = Boolean(
     selectedDate || interval.fromDate || interval.toDate,
   );
 
   return (
-    <StyledContainer $isVisible={isVisible} $isWithCancelButton={isSomethingSelected}>
+    <StyledContainer
+      $isVisible={isVisible}
+      $isWithCancelButton={isSomethingSelected}
+      onClick={handleCalendarClick}
+    >
       <TitleWithControls
         month={calendarDate.getMonth()}
         year={calendarDate.getFullYear()}

@@ -6,6 +6,7 @@ interface IComponentProps {
 
 const CalendarIcon: React.FC<IComponentProps> = ({ onClick }) => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.stopPropagation();
     const button = e.target as HTMLButtonElement;
     button.blur();
     onClick();

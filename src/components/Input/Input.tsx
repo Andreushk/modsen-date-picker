@@ -21,8 +21,12 @@ const Input: React.FC<IComponentProps> = ({
 }) => {
   const inputId: string = useId();
 
+  const handleInputClick = (e: React.MouseEvent): void => {
+    e.stopPropagation();
+  };
+
   return (
-    <StyledContainer>
+    <StyledContainer onClick={handleInputClick}>
       {label && <LabelPart htmlFor={inputId}>{label}</LabelPart>}
       <InputPart
         id={inputId}
