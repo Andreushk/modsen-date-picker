@@ -25,6 +25,7 @@ export const DatePickerComponent: Story = {
     toInputDefaultDateValue: '19/06/2024',
     withCalendarOpeningAnimation: false,
     withInterval: true,
+    countryCodeForHolidays: 'BY',
     dateRestrictions: [new Date(2024, 5, 15), new Date(2024, 7, 15)],
   },
 };

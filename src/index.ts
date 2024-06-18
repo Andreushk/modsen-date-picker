@@ -9,5 +9,6 @@ export {
   withWeeksFromSunday,
   withWeeksCalendar,
   withWeekends,
+  withHolidays,
 } from '@/hocs';
 export { CalendarService } from '@/services';

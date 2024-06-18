@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { ThemeProvider } from '@/components';
+import useGetCountryHolidays from '@/hooks/useGetCountryHolidays';
 import { formatStringToDate } from '@/utils/helpers';
 
 import DatePickerItem, { DatePickerType } from './DatePickerItem/DatePickerItem';
@@ -20,6 +21,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({
   withInterval,
   isWeeksCalendar,
   isWithWeekends,
+  countryCodeForHolidays,
 }) => {
   const getInitialDate = (): Date => {
     if (inputDefaultDateValue) {
@@ -35,6 +37,8 @@ const DatePicker: React.FC<IDatePickerProps> = ({
     fromDate: inputDefaultDateValue ?? '',
     toDate: toInputDefaultDateValue ?? '',
   });
+
+  const holidays: Date[] | null = useGetCountryHolidays(calendarDate, countryCodeForHolidays);
 
   const handleInputChanges = useCallback(
     (date: string, type: DatePickerType): void => {
@@ -105,6 +109,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({
           calendarDate={calendarDate}
           selectedDate={withInterval ? null : intervals.fromDate}
           intervals={intervals}
+          holidays={holidays}
           withCalendarOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
           isWeeksStartsFromSunday={Boolean(isWeeksStartsFromSunday)}
           isWeeksCalendar={Boolean(isWeeksCalendar)}
@@ -125,6 +130,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({
             isShowCalendar={showingCalendarType === 'to'}
             calendarDate={calendarDate}
             intervals={intervals}
+            holidays={holidays}
             withCalendarOpeningAnimation={Boolean(withCalendarOpeningAnimation)}
             isWeeksStartsFromSunday={Boolean(isWeeksStartsFromSunday)}
             isWeeksCalendar={Boolean(isWeeksCalendar)}

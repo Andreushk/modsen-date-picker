@@ -37,6 +37,7 @@
     "react/jsx-props-no-spreading": "off",
     "react/no-array-index-key": "off",
     "import/export": "off",
+    "consistent-return": "off",
     "radix": "off",
     "import/extensions": [
       "off",

@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 
 import { IIntervalDates } from '@/components/DatePicker/types';
 import {
+  checkIsHoliday,
   checkIsSameDate,
   checkIsWeekend,
   formatDateToString,
@@ -19,6 +20,7 @@ interface IComponentProps {
   calendarData: Date[][];
   selectedDate: string | null;
   interval: IIntervalDates;
+  holidays: Date[] | null;
   isStartsFromSunday: boolean;
   isWithWeekends: boolean;
   dateRestrictions: [Date, Date] | undefined;
@@ -30,6 +32,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
   calendarData,
   selectedDate,
   interval,
+  holidays,
   isStartsFromSunday,
   isWithWeekends,
   dateRestrictions,
@@ -90,6 +93,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
                   key={weekDate.getDate()}
                   day={weekDate.getDate()}
                   variant={getCellVariant(weekDate)}
+                  isHoliday={holidays ? checkIsHoliday(weekDate, holidays) : false}
                   isWeekend={isWithWeekends && checkIsWeekend(weekDate, isStartsFromSunday)}
                   disabled={!isCurrentMonth || isOverRestrictions}
                 />

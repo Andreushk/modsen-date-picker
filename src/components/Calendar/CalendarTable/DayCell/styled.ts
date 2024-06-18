@@ -4,8 +4,9 @@ export type DayCellTypes = 'selected' | 'weekend' | 'starting' | 'inRange' | 'en
 
 interface IStyleProps {
   $variant: DayCellTypes;
-  $isWeekend: boolean;
   $disabled: boolean;
+  $isWeekend: boolean;
+  $isHoliday: boolean;
 }
 
 const StyledCell = styled.td<IStyleProps>`
@@ -35,20 +36,6 @@ const StyledCell = styled.td<IStyleProps>`
         border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
         background-color: ${({ theme }) => theme.colors.backgrounds.hoveredCalendarItem};
       }
-    `}
-
-  ${({ $isWeekend, $disabled }) =>
-    $isWeekend &&
-    !$disabled &&
-    css`
-      color: ${({ theme }) => theme.colors.text.calendarWeekends};
-    `}
-
-  ${({ $isWeekend, $disabled }) =>
-    $isWeekend &&
-    $disabled &&
-    css`
-      color: ${({ theme }) => theme.colors.text.calendarWeekends}60;
     `}
 
   ${({ $variant }) =>
@@ -82,6 +69,26 @@ const StyledCell = styled.td<IStyleProps>`
     css`
       background-color: ${({ theme }) => `${theme.colors.primary}10`};
       color: ${({ theme }) => theme.colors.primary};
+    `}
+
+  ${({ $isWeekend, $disabled }) =>
+    $isWeekend &&
+    !$disabled &&
+    css`
+      color: ${({ theme }) => theme.colors.text.calendarWeekends};
+    `}
+
+  ${({ $isWeekend, $disabled }) =>
+    $isWeekend &&
+    $disabled &&
+    css`
+      color: ${({ theme }) => theme.colors.text.calendarWeekends}60;
+    `}
+
+  ${({ $isHoliday }) =>
+    $isHoliday &&
+    css`
+      color: ${({ theme }) => theme.colors.text.calendarHolidays};
     `}
 `;
 

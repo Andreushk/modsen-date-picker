@@ -10,6 +10,7 @@ interface IColors {
     calendarItems: string;
     calendarItemsDisabled: string;
     calendarWeekends: string;
+    calendarHolidays: string;
     white: string;
   };
   backgrounds: {
