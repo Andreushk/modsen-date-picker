@@ -19,6 +19,7 @@ const theme: ITheme = {
       calendarTitle: '#000000',
       calendarItems: '#333333',
       calendarItemsDisabled: '#AAAAAA',
+      calendarWeekends: '#FF0000',
       white: '#ffffff',
     },
     backgrounds: {

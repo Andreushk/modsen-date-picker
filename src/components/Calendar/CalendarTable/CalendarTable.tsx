@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { IIntervalDates } from '@/components/DatePicker/types';
 import {
   checkIsSameDate,
+  checkIsWeekend,
   formatDateToString,
   formatStringToDate,
   getParentDataAttribute,
@@ -19,6 +20,7 @@ interface IComponentProps {
   selectedDate: string | null;
   interval: IIntervalDates;
   isStartsFromSunday: boolean;
+  isWithWeekends: boolean;
   dateRestrictions: [Date, Date] | undefined;
   onDateClick: (day: string) => void;
 }
@@ -29,6 +31,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
   selectedDate,
   interval,
   isStartsFromSunday,
+  isWithWeekends,
   dateRestrictions,
   onDateClick,
 }) => {
@@ -48,7 +51,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
     return !(weekDate >= fromRestriction && weekDate <= toRestriction);
   };
 
-  const getCellStatus = (weekDate: Date): DayCellTypes => {
+  const getCellVariant = (weekDate: Date): DayCellTypes => {
     if (!selectedDate && !from && !to) return 'default';
 
     if (selectedDate) {
@@ -81,14 +84,14 @@ const CalendarTable: React.FC<IComponentProps> = ({
           <tr key={i}>
             {week.map((weekDate) => {
               const isCurrentMonth: boolean = weekDate.getMonth() === calendarDate.getMonth();
-              const isOverDateRestriction: boolean = isRestrictedDate(weekDate);
-              const dayCellVariant: DayCellTypes = getCellStatus(weekDate);
+              const isOverRestrictions: boolean = isRestrictedDate(weekDate);
               return (
                 <DayCell
                   key={weekDate.getDate()}
                   day={weekDate.getDate()}
-                  variant={dayCellVariant}
-                  disabled={!isCurrentMonth || isOverDateRestriction}
+                  variant={getCellVariant(weekDate)}
+                  isWeekend={isWithWeekends && checkIsWeekend(weekDate, isStartsFromSunday)}
+                  disabled={!isCurrentMonth || isOverRestrictions}
                 />
               );
             })}

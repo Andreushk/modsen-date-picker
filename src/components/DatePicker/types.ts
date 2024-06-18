@@ -11,6 +11,7 @@ export interface IDatePickerProps {
   withInterval: boolean | undefined;
   dateRestrictions: DateRestrictionsType | undefined;
   isWeeksCalendar: boolean | undefined;
+  isWithWeekends: boolean | undefined;
 }
 
 export interface IIntervalDates {

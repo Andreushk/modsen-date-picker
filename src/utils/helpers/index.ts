@@ -7,3 +7,4 @@ export { default as getParentDataAttribute } from './dom/getParentDataAttribute'
 export { default as withTheme } from './tests/withTheme';
 export { default as extractDateParts } from './dates/extractDateParts';
 export { default as getWeekStartDate } from './dates/getWeekStartDate';
+export { default as checkIsWeekend } from './dates/checkIsWeekend';

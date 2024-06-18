@@ -1,9 +1,10 @@
 import styled, { css } from 'styled-components';
 
-export type DayCellTypes = 'selected' | 'starting' | 'inRange' | 'ending' | 'default';
+export type DayCellTypes = 'selected' | 'weekend' | 'starting' | 'inRange' | 'ending' | 'default';
 
 interface IStyleProps {
   $variant: DayCellTypes;
+  $isWeekend: boolean;
   $disabled: boolean;
 }
 
@@ -22,6 +23,32 @@ const StyledCell = styled.td<IStyleProps>`
     css`
       cursor: default;
       color: ${({ theme }) => theme.colors.text.calendarItemsDisabled};
+    `}
+
+  ${({ $disabled, $variant }) =>
+    !$disabled &&
+    $variant === 'default' &&
+    css`
+      color: ${({ theme }) => theme.colors.text.calendarItems};
+
+      &:hover {
+        border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
+        background-color: ${({ theme }) => theme.colors.backgrounds.hoveredCalendarItem};
+      }
+    `}
+
+  ${({ $isWeekend, $disabled }) =>
+    $isWeekend &&
+    !$disabled &&
+    css`
+      color: ${({ theme }) => theme.colors.text.calendarWeekends};
+    `}
+
+  ${({ $isWeekend, $disabled }) =>
+    $isWeekend &&
+    $disabled &&
+    css`
+      color: ${({ theme }) => theme.colors.text.calendarWeekends}60;
     `}
 
   ${({ $variant }) =>
@@ -55,18 +82,6 @@ const StyledCell = styled.td<IStyleProps>`
     css`
       background-color: ${({ theme }) => `${theme.colors.primary}10`};
       color: ${({ theme }) => theme.colors.primary};
-    `}
-
-  ${({ $disabled, $variant }) =>
-    !$disabled &&
-    $variant === 'default' &&
-    css`
-      color: ${({ theme }) => theme.colors.text.calendarItems};
-
-      &:hover {
-        border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
-        background-color: ${({ theme }) => theme.colors.backgrounds.hoveredCalendarItem};
-      }
     `}
 `;
 

@@ -7,3 +7,4 @@ export { default as withDefaultIntervalDates } from './withDefaultIntervalDates'
 export { default as withDatesRestrictions } from './withDatesRestrictions';
 export { default as withWeeksFromSunday } from './withWeeksFromSunday';
 export { default as withWeeksCalendar } from './withWeeksCalendar';
+export { default as withWeekends } from './withWeekends';

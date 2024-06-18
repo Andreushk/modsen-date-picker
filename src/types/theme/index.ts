@@ -9,6 +9,7 @@ interface IColors {
     calendarTitle: string;
     calendarItems: string;
     calendarItemsDisabled: string;
+    calendarWeekends: string;
     white: string;
   };
   backgrounds: {

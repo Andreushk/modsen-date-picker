@@ -14,6 +14,7 @@ type Story = StoryObj<typeof meta>;
 
 export const DatePickerComponent: Story = {
   args: {
+    isWithWeekends: true,
     isWeeksCalendar: true,
     isWeeksStartsFromSunday: false,
     inputLabel: 'From',
