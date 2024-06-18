@@ -2,10 +2,15 @@ import { useEffect, useRef } from 'react';
 
 interface IComponentProps {
   children: React.ReactNode;
+  isWithCapturePhase?: boolean;
   onOutsideClick: () => void;
 }
 
-const OutsideClickHandler: React.FC<IComponentProps> = ({ children, onOutsideClick }) => {
+const OutsideClickHandler: React.FC<IComponentProps> = ({
+  children,
+  isWithCapturePhase = false,
+  onOutsideClick,
+}) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const handleClick = (event: MouseEvent) => {
@@ -15,9 +20,9 @@ const OutsideClickHandler: React.FC<IComponentProps> = ({ children, onOutsideCli
   };
 
   useEffect(() => {
-    document.addEventListener('click', handleClick);
+    document.addEventListener('click', handleClick, isWithCapturePhase);
     return () => {
-      document.removeEventListener('click', handleClick);
+      document.removeEventListener('click', handleClick, isWithCapturePhase);
     };
   });
 

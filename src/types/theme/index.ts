@@ -15,20 +15,27 @@ interface IColors {
   };
   backgrounds: {
     hoveredCalendarItem: string;
+    calendarHint: string;
+    hint: string;
+    priorityIcon: string;
     default: string;
   };
 }
 
 interface IWidths {
+  border: string;
   calendar: string;
   icons: string;
   calendarDay: string;
+  tasksControls: string;
 }
 
 interface IHeights {
+  hintIndicator: string;
   inputs: string;
   icons: string;
   calendarDay: string;
+  tasksList: string;
 }
 
 interface IFontSizes {
@@ -58,7 +65,7 @@ interface IBorderRadiuses {
 interface IDurations {
   quick: '100ms';
   normal: '200ms';
-  slow: '300ms';
+  slow: '7000ms';
 }
 
 interface IZIndexes {

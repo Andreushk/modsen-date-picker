@@ -13,12 +13,12 @@ const withDefaultIntervalDates =
 
     if (from) {
       const [year, month, day] = from;
-      fromDateString = formatDateToString(String(day), new Date(year, month - 1));
+      fromDateString = formatDateToString(new Date(year, month - 1, day));
     }
 
     if (to) {
       const [year, month, day] = to;
-      toDateString = formatDateToString(String(day), new Date(year, month - 1));
+      toDateString = formatDateToString(new Date(year, month - 1, day));
     }
 
     return (

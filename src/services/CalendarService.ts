@@ -1,4 +1,5 @@
-import DatePicker, { IDatePickerProps } from '@/components/DatePicker/DatePicker';
+import DatePicker from '@/components/DatePicker/DatePicker';
+import { IDatePickerProps } from '@/components/DatePicker/types';
 
 type DecoratorType<IDatePickerProps> = (
   Component: React.FC<IDatePickerProps>,

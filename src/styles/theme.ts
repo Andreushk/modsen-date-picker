@@ -7,6 +7,7 @@ const theme: ITheme = {
     '10px', // 2
     '16px', // 3
     '30px', // 4
+    '32px', // 5
   ],
   colors: {
     primary: '#2F80ED',
@@ -25,18 +26,25 @@ const theme: ITheme = {
     },
     backgrounds: {
       hoveredCalendarItem: '#f1f1f1',
+      calendarHint: '#2A2A2A90',
+      hint: 'rgba(0, 0, 0, 0.8)',
+      priorityIcon: '#FFA500',
       default: '#ffffff',
     },
   },
   widths: {
+    border: '1px',
     calendar: '250px',
     icons: '16px',
     calendarDay: '32px',
+    tasksControls: '64px',
   },
   heights: {
+    hintIndicator: '4px',
     inputs: '42px',
     icons: '16px',
     calendarDay: '32px',
+    tasksList: '200px',
   },
   fontSizes: {
     input: '15px',
@@ -59,7 +67,7 @@ const theme: ITheme = {
     calendarItems: '8px',
   },
   durations: {
-    slow: '300ms',
+    slow: '7000ms',
     normal: '200ms',
     quick: '100ms',
   },

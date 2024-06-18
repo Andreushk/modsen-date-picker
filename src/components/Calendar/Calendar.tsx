@@ -1,13 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { generateCalendar } from '@/utils/helpers';
+import theme from '@/styles/theme';
+import { ILocalStorageData } from '@/types/localStorage';
+import { generateCalendar, getLocalStorageData, setLocalStorageData } from '@/utils/helpers';
 
+import Button from '../Button/Button';
 import { IIntervalDates } from '../DatePicker/types';
 import CalendarTable from './CalendarTable/CalendarTable';
-import CancelButton from './CancelButton/CancelButton';
 import StyledContainer from './styled';
+import TasksHint from './TasksHint/TasksHint';
 import TitleWithControls from './TitleWithControls/TitleWithControls';
 
+const CANCEL_BUTTON_VALUE = 'Cancel';
 interface IComponentProps {
   calendarDate: Date;
   selectedDate: string | null;
@@ -38,9 +42,27 @@ const Calendar: React.FC<IComponentProps> = ({
   onCancelClick,
 }) => {
   const [isVisible, setIsVisible] = useState<boolean>(!withOpeningAnimation);
+  const [isTasksHintVisible, setIsTasksHintVisible] = useState<boolean>(false);
 
   useEffect((): void => {
     setIsVisible(true);
+  }, []);
+
+  useEffect((): void => {
+    const localStorageData: ILocalStorageData | null = getLocalStorageData();
+
+    if (!localStorageData || localStorageData.isFirstRun) {
+      setIsTasksHintVisible(true);
+      setLocalStorageData({ isFirstRun: false, tasks: {} });
+
+      const indicatorAnimationDuration: number = Number.parseInt(theme.durations.slow);
+      const hintOpacityChangeTime: number = Number.parseInt(theme.durations.quick);
+
+      const timerId = setTimeout((): void => {
+        setIsTasksHintVisible(false);
+        clearTimeout(timerId);
+      }, indicatorAnimationDuration + hintOpacityChangeTime);
+    }
   }, []);
 
   const calendarDates: Date[] = useMemo(
@@ -67,12 +89,17 @@ const Calendar: React.FC<IComponentProps> = ({
     e.stopPropagation();
   };
 
+  const handleTasksHintClick = (): void => {
+    setIsTasksHintVisible(false);
+  };
+
   const isSomethingSelected: boolean = Boolean(
     selectedDate || interval.fromDate || interval.toDate,
   );
 
   return (
     <StyledContainer
+      id="date-picker-calendar"
       $isVisible={isVisible}
       $isWithCancelButton={isSomethingSelected}
       onClick={handleCalendarClick}
@@ -94,7 +121,8 @@ const Calendar: React.FC<IComponentProps> = ({
         dateRestrictions={dateRestrictions}
         onDateClick={onDateClick}
       />
-      {isSomethingSelected && <CancelButton onClick={onCancelClick} />}
+      {isSomethingSelected && <Button onClick={onCancelClick}>{CANCEL_BUTTON_VALUE}</Button>}
+      {isTasksHintVisible && <TasksHint onClick={handleTasksHintClick} />}
     </StyledContainer>
   );
 };

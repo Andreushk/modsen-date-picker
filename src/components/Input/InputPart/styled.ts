@@ -5,7 +5,7 @@ const StyledContainer = styled.div`
   align-items: center;
   height: ${({ theme }) => theme.heights.inputs};
   border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  border: ${({ theme }) => theme.widths.border} solid ${({ theme }) => theme.colors.border};
 
   & > button {
     cursor: pointer;

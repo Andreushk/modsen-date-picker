@@ -5,8 +5,8 @@ import {
   checkIsHoliday,
   checkIsSameDate,
   checkIsWeekend,
-  formatDateToString,
   formatStringToDate,
+  getDateStringFromDayAndDate,
   getParentDataAttribute,
 } from '@/utils/helpers';
 
@@ -75,7 +75,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
 
     if (clickedElement) {
       const day: string | null = getParentDataAttribute(clickedElement, 'data-day');
-      if (day) onDateClick(formatDateToString(day, calendarDate));
+      if (day) onDateClick(getDateStringFromDayAndDate(day, calendarDate));
     }
   };
 
@@ -91,7 +91,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
               return (
                 <DayCell
                   key={weekDate.getDate()}
-                  day={weekDate.getDate()}
+                  date={weekDate}
                   variant={getCellVariant(weekDate)}
                   isHoliday={holidays ? checkIsHoliday(weekDate, holidays) : false}
                   isWeekend={isWithWeekends && checkIsWeekend(weekDate, isStartsFromSunday)}

@@ -18,7 +18,7 @@ const withDefaultDate = (date: HOCDateFormat) => {
     return (props: Omit<P, 'inputDefaultDateValue'>) => (
       <WrappedComponent
         {...(props as P)}
-        inputDefaultDateValue={formatDateToString(String(day), new Date(year, month - 1, day))}
+        inputDefaultDateValue={formatDateToString(new Date(year, month - 1, day))}
       />
     );
   };

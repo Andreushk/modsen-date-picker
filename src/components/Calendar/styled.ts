@@ -24,7 +24,7 @@ const StyledContainer = styled.div<IStyleProps>`
     `}
 
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.border};
+  border: ${({ theme }) => theme.widths.border} solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
   background-color: ${({ theme }) => theme.colors.backgrounds.default};
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};

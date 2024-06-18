@@ -2,16 +2,16 @@ import React from 'react';
 
 import StyledButton from './styled';
 
+const BUTTON_VALUE = '+';
+
 interface IComponentProps {
   onClick: () => void;
 }
 
-const BUTTON_TEXT = 'Cancel';
-
-const CancelButton: React.FC<IComponentProps> = ({ onClick }) => (
+const AddButton: React.FC<IComponentProps> = ({ onClick }) => (
   <StyledButton type="button" onClick={onClick}>
-    {BUTTON_TEXT}
+    {BUTTON_VALUE}
   </StyledButton>
 );
 
-export default React.memo(CancelButton);
+export default React.memo(AddButton);

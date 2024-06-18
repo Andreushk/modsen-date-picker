@@ -11,7 +11,7 @@ const StyledButton = styled.button`
   border: none;
   border-bottom-right-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
   border-bottom-left-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
+  border-top: ${({ theme }) => theme.widths.border} solid ${({ theme }) => theme.colors.border};
 `;
 
 export default StyledButton;
