@@ -5,7 +5,6 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spaces[4]};
   width: ${({ theme }) => theme.widths.calendar};
-  margin: 300px auto;
 
   & > div:first-of-type {
     z-index: ${({ theme }) => theme.zIndexes[2]};

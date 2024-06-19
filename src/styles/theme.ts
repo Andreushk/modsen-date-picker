@@ -44,7 +44,7 @@ const theme: ITheme = {
     inputs: '42px',
     icons: '16px',
     calendarDay: '32px',
-    tasksList: '200px',
+    tasksList: '270px',
   },
   fontSizes: {
     input: '15px',
