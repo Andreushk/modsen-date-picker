@@ -5,6 +5,7 @@ import {
   checkIsHoliday,
   checkIsSameDate,
   checkIsWeekend,
+  extractDateParts,
   formatStringToDate,
   getDateStringFromDayAndDate,
   getParentDataAttribute,
@@ -60,10 +61,17 @@ const CalendarTable: React.FC<IComponentProps> = ({
     if (!selectedDate && !from && !to) return 'default';
 
     if (selectedDate) {
-      const isSelectedDay = Number(selectedDate.slice(0, 2)) === weekDate.getDate();
-      const isSelectedDayMonth = Number(selectedDate.slice(3, 5)) - 1 === calendarDate.getMonth();
-      const isSelectedDayYear = Number(selectedDate.slice(6)) === calendarDate.getFullYear();
-      return isSelectedDay && isSelectedDayMonth && isSelectedDayYear ? 'selected' : 'default';
+      const selectedDay: number = Number(selectedDate.slice(0, 2));
+      const selectedMonth: number = Number(selectedDate.slice(3, 5)) - 1;
+      const selectedYear: number = Number(selectedDate.slice(6));
+
+      const { year: weekYear, month: weekMonth, day: weekDay } = extractDateParts(weekDate);
+      const calendarMonth: number = calendarDate.getMonth();
+
+      const isSelectedDay = selectedDay === weekDay;
+      const isSelectedMonth = selectedMonth === calendarMonth && selectedMonth === weekMonth;
+      const isSelectedYear = selectedYear === weekYear;
+      return isSelectedDay && isSelectedMonth && isSelectedYear ? 'selected' : 'default';
     }
 
     if (from && checkIsSameDate(weekDate, from)) return 'starting';
