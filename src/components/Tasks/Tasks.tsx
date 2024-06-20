@@ -3,7 +3,8 @@ import List from './List/List';
 import StyledContainer from './styled';
 import TitlePart from './TitlePart/TitlePart';
 
-const CLOSE_BUTTON_VALUE = 'Close';
+export const TASKS_WINDOW_TEST_ID = 'date-picker-tasks-window';
+export const CLOSE_BUTTON_VALUE = 'Close';
 
 interface IComponentProps {
   date: Date;
@@ -11,7 +12,7 @@ interface IComponentProps {
 }
 
 const Tasks: React.FC<IComponentProps> = ({ date, onClose }) => (
-  <StyledContainer>
+  <StyledContainer data-testid={TASKS_WINDOW_TEST_ID}>
     <TitlePart date={date} />
     <List date={date} />
     <Button onClick={onClose}>{CLOSE_BUTTON_VALUE}</Button>

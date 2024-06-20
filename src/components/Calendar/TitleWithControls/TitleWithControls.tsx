@@ -6,6 +6,8 @@ import { extractDateParts, getWeekStartDate } from '@/utils/helpers';
 import DateSwitchingButton from './DateSwitchingButton/DateSwitchingButton';
 import { StyledContainer, StyledTitle } from './styled';
 
+export const CALENDAR_TITLE_TEST_ID = 'date-picker-calendar-title';
+
 interface IComponentProps {
   calendarDate: Date;
   restrictions: [Date, Date] | undefined;
@@ -67,7 +69,7 @@ const TitleWithControls: React.FC<IComponentProps> = ({
   return (
     <StyledContainer>
       <DateSwitchingButton disabled={isPrevButtonDisabled} onClick={handlePrevButtonClick} />
-      <StyledTitle>{`${MONTHS[month]} ${year}`}</StyledTitle>
+      <StyledTitle data-testid={CALENDAR_TITLE_TEST_ID}>{`${MONTHS[month]} ${year}`}</StyledTitle>
       <DateSwitchingButton disabled={isNextButtonDisabled} onClick={handleNextButtonClick} />
     </StyledContainer>
   );

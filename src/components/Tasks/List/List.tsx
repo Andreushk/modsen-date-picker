@@ -18,6 +18,8 @@ import { StyledContainer, StyledScrollableContainer } from './styled';
 import Task from './Task/Task';
 import TaskInput from './TaskInput/TaskInput';
 
+export const TASKS_LIST_TEST_ID = 'date-picker-tasks-list';
+
 interface IComponentProps {
   date: Date;
 }
@@ -76,7 +78,7 @@ const List: React.FC<IComponentProps> = ({ date }) => {
     <StyledScrollableContainer>
       {(!tasks || tasks.length === 0) && <NoTasks />}
       {tasks && tasks.length > 0 && (
-        <StyledContainer>
+        <StyledContainer data-testid={TASKS_LIST_TEST_ID}>
           {tasks.map(({ id, value, isImportant }) => (
             <Task
               key={id}

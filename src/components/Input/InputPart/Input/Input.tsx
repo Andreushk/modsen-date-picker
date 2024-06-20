@@ -2,6 +2,8 @@ import { transformEnteredDate } from '@/utils/helpers';
 
 import StyledInput from './styled';
 
+export const INPUT_DATA_TEST_ID = 'date-picker-input';
+
 interface IComponentProps {
   id: string;
   value: string;
@@ -17,6 +19,7 @@ const Input: React.FC<IComponentProps> = ({ id, value, placeholder, onChange }) 
 
   return (
     <StyledInput
+      data-testid={INPUT_DATA_TEST_ID}
       id={id}
       type="text"
       value={value}

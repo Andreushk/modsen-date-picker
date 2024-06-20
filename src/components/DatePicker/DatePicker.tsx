@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { ThemeProvider } from '@/components';
+import { FROM_DATE_PICKER_TYPE, TO_DATE_PICKER_TYPE } from '@/constants/datePickerTypes';
 import useGetCountryHolidays from '@/hooks/useGetCountryHolidays';
 import { formatStringToDate } from '@/utils/helpers';
 
@@ -103,10 +104,10 @@ const DatePicker: React.FC<IDatePickerProps> = ({
     <ThemeProvider>
       <StyledContainer>
         <DatePickerItem
-          type="from"
+          type={FROM_DATE_PICKER_TYPE}
           inputLabel={inputLabel}
           inputPlaceholder={inputPlaceholder}
-          isShowCalendar={showingCalendarType === 'from'}
+          isShowCalendar={showingCalendarType === FROM_DATE_PICKER_TYPE}
           calendarDate={calendarDate}
           selectedDate={withInterval ? null : intervals.fromDate}
           intervals={intervals}
@@ -125,11 +126,11 @@ const DatePicker: React.FC<IDatePickerProps> = ({
         />
         {withInterval && (
           <DatePickerItem
-            type="to"
+            type={TO_DATE_PICKER_TYPE}
             selectedDate={null}
             inputLabel={toInputLabel}
             inputPlaceholder={toInputPlaceholder}
-            isShowCalendar={showingCalendarType === 'to'}
+            isShowCalendar={showingCalendarType === TO_DATE_PICKER_TYPE}
             calendarDate={calendarDate}
             intervals={intervals}
             holidays={holidays}

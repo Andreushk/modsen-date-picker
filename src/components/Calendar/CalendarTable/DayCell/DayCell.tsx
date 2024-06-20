@@ -6,6 +6,8 @@ import useLongPress from '@/hooks/useLongPress';
 
 import StyledCell, { DayCellTypes } from './styled';
 
+export const SELECTED_DAY_TEST_ID = 'date-picker-selected-day';
+
 interface IComponentProps {
   date: Date;
   disabled: boolean;
@@ -48,6 +50,7 @@ const DayCell: React.FC<IComponentProps> = ({
         onMouseUp={isWithTasks ? onMouseUp : undefined}
         onTouchStart={isWithTasks ? onTouchStart : undefined}
         onTouchEnd={isWithTasks ? onTouchEnd : undefined}
+        data-testid={variant === 'selected' ? SELECTED_DAY_TEST_ID : null}
       >
         {date.getDate()}
       </StyledCell>

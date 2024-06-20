@@ -7,11 +7,14 @@ import {
   Input,
   OutsideClickHandler,
 } from '@/components';
+import { FROM_DATE_PICKER_TYPE, TO_DATE_PICKER_TYPE } from '@/constants/datePickerTypes';
 
 import { CalendarTypes, IIntervalDates } from '../types';
 import StyledContainer from './styled';
 
-export type DatePickerType = 'from' | 'to';
+export type DatePickerType = typeof FROM_DATE_PICKER_TYPE | typeof TO_DATE_PICKER_TYPE;
+
+export const DATE_PICKER_ITEM_TEST_ID = 'date-picker-item-';
 
 interface IComponentProps {
   type: DatePickerType;
@@ -64,10 +67,10 @@ const DatePickerItem: React.FC<IComponentProps> = ({
   );
 
   const handleCalendarIconClick = useCallback((): void => {
-    if (type === 'from') {
-      onCalendarIconClick('from');
+    if (type === FROM_DATE_PICKER_TYPE) {
+      onCalendarIconClick(FROM_DATE_PICKER_TYPE);
     } else {
-      onCalendarIconClick('to');
+      onCalendarIconClick(TO_DATE_PICKER_TYPE);
     }
   }, [type, onCalendarIconClick]);
 
@@ -78,10 +81,10 @@ const DatePickerItem: React.FC<IComponentProps> = ({
   return (
     <ErrorBoundary fallback={<DatePickerErrorFallback />}>
       <OutsideClickHandler onOutsideClick={handleCalendarOutsideClick}>
-        <StyledContainer>
+        <StyledContainer data-testid={DATE_PICKER_ITEM_TEST_ID + type}>
           <Input
             label={inputLabel}
-            value={type === 'from' ? intervals.fromDate : intervals.toDate}
+            value={type === FROM_DATE_PICKER_TYPE ? intervals.fromDate : intervals.toDate}
             placeholder={inputPlaceholder}
             onChange={handleDateInputChanges}
             onCalendarIconClick={handleCalendarIconClick}

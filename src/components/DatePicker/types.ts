@@ -1,19 +1,19 @@
 type DateRestrictionsType = [Date, Date];
 export interface IDatePickerProps {
-  inputLabel: string | undefined;
-  toInputLabel: string | undefined;
-  inputPlaceholder: string | undefined;
-  toInputPlaceholder: string | undefined;
-  inputDefaultDateValue: string | undefined;
-  toInputDefaultDateValue: string | undefined;
-  withCalendarOpeningAnimation: boolean | undefined;
-  isWeeksStartsFromSunday: boolean | undefined;
-  withInterval: boolean | undefined;
-  dateRestrictions: DateRestrictionsType | undefined;
-  isWeeksCalendar: boolean | undefined;
-  isWithWeekends: boolean | undefined;
-  withTasks: boolean | undefined;
-  countryCodeForHolidays: string | undefined;
+  inputLabel?: string;
+  toInputLabel?: string;
+  inputPlaceholder?: string;
+  toInputPlaceholder?: string;
+  inputDefaultDateValue?: string;
+  toInputDefaultDateValue?: string;
+  withCalendarOpeningAnimation?: boolean;
+  isWeeksStartsFromSunday?: boolean;
+  withInterval?: boolean;
+  dateRestrictions?: DateRestrictionsType;
+  isWeeksCalendar?: boolean;
+  isWithWeekends?: boolean;
+  withTasks?: boolean;
+  countryCodeForHolidays?: string;
 }
 
 export interface IIntervalDates {

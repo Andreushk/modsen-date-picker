@@ -16,6 +16,8 @@ import { DayCellTypes } from './DayCell/styled';
 import StyledTable from './styled';
 import TableHead from './TableHead/TableHead';
 
+export const CALENDAR_TABLE_TEST_ID = 'date-picker-calendar-table';
+
 interface IComponentProps {
   calendarDate: Date;
   calendarData: Date[][];
@@ -90,7 +92,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
   };
 
   return (
-    <StyledTable>
+    <StyledTable data-testid={CALENDAR_TABLE_TEST_ID}>
       <TableHead isStartsFromSunday={isStartsFromSunday} />
       <tbody onClick={handleDayClick}>
         {calendarData.map((week, i) => (

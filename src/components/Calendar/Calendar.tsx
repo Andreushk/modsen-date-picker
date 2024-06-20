@@ -11,6 +11,8 @@ import StyledContainer from './styled';
 import TasksHint from './TasksHint/TasksHint';
 import TitleWithControls from './TitleWithControls/TitleWithControls';
 
+export const DATE_PICKER_CALENDAR_ID = 'date-picker-calendar';
+
 const CANCEL_BUTTON_VALUE = 'Cancel';
 interface IComponentProps {
   calendarDate: Date;
@@ -103,7 +105,8 @@ const Calendar: React.FC<IComponentProps> = ({
 
   return (
     <StyledContainer
-      id="date-picker-calendar"
+      id={DATE_PICKER_CALENDAR_ID}
+      data-testid={DATE_PICKER_CALENDAR_ID}
       $isVisible={isVisible}
       $isWithCancelButton={isSomethingSelected}
       onClick={handleCalendarClick}

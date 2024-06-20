@@ -6,6 +6,8 @@ import Indicator from './Indicator/Indicator';
 import Information from './Information/Information';
 import StyledContainer from './styled';
 
+export const TASKS_HINT_TEST_ID = 'date-picker-tasks-hint';
+
 interface IComponentProps {
   onClick: () => void;
 }
@@ -21,7 +23,7 @@ const TasksHint: React.FC<IComponentProps> = ({ onClick }) => {
   }, []);
 
   return (
-    <StyledContainer $visible={isVisible} onClick={onClick}>
+    <StyledContainer $visible={isVisible} onClick={onClick} data-testid={TASKS_HINT_TEST_ID}>
       <Indicator />
       <Information />
     </StyledContainer>

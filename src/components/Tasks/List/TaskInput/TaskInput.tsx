@@ -4,6 +4,8 @@ import { OutsideClickHandler } from '@/components';
 
 import { StyledContainer, StyledInput, StyledSaveButton } from './styled';
 
+export const TASK_INPUT_TEST_ID = 'date-picker-add-task-input';
+export const SAVE_NEW_TASK_BUTTON_TEST_ID = 'date-picker-save-task-button';
 const SAVE_BUTTON_VALUE = 'Save';
 
 interface IComponentProps {
@@ -44,8 +46,17 @@ const TaskInput: React.FC<IComponentProps> = ({ onClose, onTaskSave }) => {
   return (
     <OutsideClickHandler onOutsideClick={onClose} isWithCapturePhase>
       <StyledContainer>
-        <StyledInput type="text" value={value} onChange={handleInputChanges} />
-        <StyledSaveButton disabled={value.trim().length < 6} onClick={handleSaveClick}>
+        <StyledInput
+          type="text"
+          value={value}
+          onChange={handleInputChanges}
+          data-testid={TASK_INPUT_TEST_ID}
+        />
+        <StyledSaveButton
+          disabled={value.trim().length < 6}
+          onClick={handleSaveClick}
+          data-testid={SAVE_NEW_TASK_BUTTON_TEST_ID}
+        >
           {SAVE_BUTTON_VALUE}
         </StyledSaveButton>
       </StyledContainer>
