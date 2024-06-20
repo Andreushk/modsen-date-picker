@@ -10,5 +10,6 @@ export {
   withWeeksCalendar,
   withWeekends,
   withHolidays,
+  withTasks,
 } from '@/hocs';
 export { CalendarService } from '@/services';

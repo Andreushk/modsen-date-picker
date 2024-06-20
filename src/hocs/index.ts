@@ -9,3 +9,4 @@ export { default as withWeeksFromSunday } from './withWeeksFromSunday';
 export { default as withWeeksCalendar } from './withWeeksCalendar';
 export { default as withWeekends } from './withWeekends';
 export { default as withHolidays } from './withHolidays';
+export { default as withTasks } from './withTasks';

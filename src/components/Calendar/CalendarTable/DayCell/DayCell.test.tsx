@@ -9,14 +9,15 @@ describe('DayCell component', () => {
     const { getByText } = render(
       withTheme(
         <DayCell
-          date={new Date()}
+          date={new Date(2024, 6, 19)}
           variant="default"
           disabled={false}
           isWeekend={false}
           isHoliday={false}
+          isWithTasks={false}
         />,
       ),
     );
-    expect(getByText('5')).toBeInTheDocument();
+    expect(getByText('19')).toBeInTheDocument();
   });
 });

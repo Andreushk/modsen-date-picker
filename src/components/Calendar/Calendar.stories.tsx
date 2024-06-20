@@ -89,4 +89,14 @@ export const WithDatesRestrictions: Story = {
   },
 };
 
+export const WithTasks: Story = {
+  args: {
+    calendarDate: today,
+    interval: { fromDate: '', toDate: '' },
+    isWithWeekends: true,
+    isWeeksCalendar: true,
+    withTasks: true,
+  },
+};
+
 export default meta;

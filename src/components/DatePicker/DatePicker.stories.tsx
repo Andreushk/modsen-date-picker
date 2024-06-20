@@ -144,4 +144,13 @@ export const WithOpeningAnimation: Story = {
   },
 };
 
+export const WithTasks: Story = {
+  args: {
+    inputLabel: LABEL,
+    inputPlaceholder: PLACEHOLDER,
+    withCalendarOpeningAnimation: true,
+    withTasks: true,
+  },
+};
+
 export default meta;

@@ -21,6 +21,7 @@ interface IComponentProps {
   selectedDate: string | null;
   interval: IIntervalDates;
   holidays: Date[] | null;
+  withTasks: boolean;
   isStartsFromSunday: boolean;
   isWithWeekends: boolean;
   dateRestrictions: [Date, Date] | undefined;
@@ -33,6 +34,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
   selectedDate,
   interval,
   holidays,
+  withTasks,
   isStartsFromSunday,
   isWithWeekends,
   dateRestrictions,
@@ -96,6 +98,7 @@ const CalendarTable: React.FC<IComponentProps> = ({
                   isHoliday={holidays ? checkIsHoliday(weekDate, holidays) : false}
                   isWeekend={isWithWeekends && checkIsWeekend(weekDate, isStartsFromSunday)}
                   disabled={!isCurrentMonth || isOverRestrictions}
+                  isWithTasks={withTasks}
                 />
               );
             })}

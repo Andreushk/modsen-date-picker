@@ -24,6 +24,7 @@ const StyledContainer = styled.div<IStyleProps>`
     `}
 
   width: 100%;
+  max-width: ${({ theme }) => theme.widths.calendar};
   border: ${({ theme }) => theme.widths.border} solid ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
   background-color: ${({ theme }) => theme.colors.backgrounds.default};

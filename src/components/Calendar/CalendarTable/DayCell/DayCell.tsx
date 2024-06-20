@@ -12,9 +12,17 @@ interface IComponentProps {
   variant: DayCellTypes;
   isWeekend: boolean;
   isHoliday: boolean;
+  isWithTasks: boolean;
 }
 
-const DayCell: React.FC<IComponentProps> = ({ date, disabled, variant, isWeekend, isHoliday }) => {
+const DayCell: React.FC<IComponentProps> = ({
+  date,
+  disabled,
+  variant,
+  isWeekend,
+  isHoliday,
+  isWithTasks,
+}) => {
   const [isTasksOpen, setIsTasksOpen] = useState<boolean>(false);
   const container: HTMLElement | null = document.getElementById('date-picker-calendar');
 
@@ -26,17 +34,20 @@ const DayCell: React.FC<IComponentProps> = ({ date, disabled, variant, isWeekend
     setIsTasksOpen(true);
   };
 
-  const events = useLongPress(handleTasksOpen, 200);
+  const { onMouseDown, onMouseUp, onTouchStart, onTouchEnd } = useLongPress(handleTasksOpen, 200);
 
   return (
     <>
       <StyledCell
-        {...events}
         data-day={disabled ? null : date.getDate()}
         $disabled={disabled}
         $variant={variant}
         $isHoliday={isHoliday}
         $isWeekend={isWeekend}
+        onMouseDown={isWithTasks ? onMouseDown : undefined}
+        onMouseUp={isWithTasks ? onMouseUp : undefined}
+        onTouchStart={isWithTasks ? onTouchStart : undefined}
+        onTouchEnd={isWithTasks ? onTouchEnd : undefined}
       >
         {date.getDate()}
       </StyledCell>

@@ -12,6 +12,7 @@ export interface IDatePickerProps {
   dateRestrictions: DateRestrictionsType | undefined;
   isWeeksCalendar: boolean | undefined;
   isWithWeekends: boolean | undefined;
+  withTasks: boolean | undefined;
   countryCodeForHolidays: string | undefined;
 }
 

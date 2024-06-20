@@ -17,6 +17,7 @@ interface IComponentProps {
   selectedDate: string | null;
   interval: IIntervalDates;
   holidays: Date[] | null;
+  withTasks: boolean;
   withOpeningAnimation: boolean;
   isStartsFromSunday: boolean;
   isWeeksCalendar: boolean;
@@ -32,6 +33,7 @@ const Calendar: React.FC<IComponentProps> = ({
   selectedDate,
   interval,
   holidays,
+  withTasks,
   isStartsFromSunday,
   isWeeksCalendar,
   isWithWeekends,
@@ -49,21 +51,23 @@ const Calendar: React.FC<IComponentProps> = ({
   }, []);
 
   useEffect((): void => {
-    const localStorageData: ILocalStorageData | null = getLocalStorageData();
+    if (withTasks) {
+      const localStorageData: ILocalStorageData | null = getLocalStorageData();
 
-    if (!localStorageData || localStorageData.isFirstRun) {
-      setIsTasksHintVisible(true);
-      setLocalStorageData({ isFirstRun: false, tasks: {} });
+      if (!localStorageData || localStorageData.isFirstRun) {
+        setIsTasksHintVisible(true);
+        setLocalStorageData({ isFirstRun: false, tasks: {} });
 
-      const indicatorAnimationDuration: number = Number.parseInt(theme.durations.slow);
-      const hintOpacityChangeTime: number = Number.parseInt(theme.durations.quick);
+        const indicatorAnimationDuration: number = Number.parseInt(theme.durations.slow);
+        const hintOpacityChangeTime: number = Number.parseInt(theme.durations.quick);
 
-      const timerId = setTimeout((): void => {
-        setIsTasksHintVisible(false);
-        clearTimeout(timerId);
-      }, indicatorAnimationDuration + hintOpacityChangeTime);
+        const timerId = setTimeout((): void => {
+          setIsTasksHintVisible(false);
+          clearTimeout(timerId);
+        }, indicatorAnimationDuration + hintOpacityChangeTime);
+      }
     }
-  }, []);
+  }, [withTasks]);
 
   const calendarDates: Date[] = useMemo(
     (): Date[] =>
@@ -116,6 +120,7 @@ const Calendar: React.FC<IComponentProps> = ({
         selectedDate={selectedDate}
         interval={interval}
         holidays={holidays}
+        withTasks={withTasks}
         isWithWeekends={isWithWeekends}
         isStartsFromSunday={isStartsFromSunday}
         dateRestrictions={dateRestrictions}
