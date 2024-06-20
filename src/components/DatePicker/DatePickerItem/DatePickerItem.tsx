@@ -1,6 +1,12 @@
 import React, { useCallback } from 'react';
 
-import { Calendar, Input, OutsideClickHandler } from '@/components';
+import {
+  Calendar,
+  DatePickerErrorFallback,
+  ErrorBoundary,
+  Input,
+  OutsideClickHandler,
+} from '@/components';
 
 import { CalendarTypes, IIntervalDates } from '../types';
 import StyledContainer from './styled';
@@ -70,34 +76,36 @@ const DatePickerItem: React.FC<IComponentProps> = ({
   }, [onCalendarIconClick]);
 
   return (
-    <OutsideClickHandler onOutsideClick={handleCalendarOutsideClick}>
-      <StyledContainer>
-        <Input
-          label={inputLabel}
-          value={type === 'from' ? intervals.fromDate : intervals.toDate}
-          placeholder={inputPlaceholder}
-          onChange={handleDateInputChanges}
-          onCalendarIconClick={handleCalendarIconClick}
-        />
-        {isShowCalendar && (
-          <Calendar
-            calendarDate={calendarDate}
-            selectedDate={selectedDate}
-            interval={intervals}
-            holidays={holidays}
-            withTasks={withTasks}
-            isStartsFromSunday={isWeeksStartsFromSunday}
-            isWeeksCalendar={isWeeksCalendar}
-            isWithWeekends={isWithWeekends}
-            withOpeningAnimation={withCalendarOpeningAnimation}
-            dateRestrictions={dateRestrictions}
-            onDateClick={onCalendarDayClick}
-            onDateChange={onDateChange}
-            onCancelClick={onCancelButtonClick}
+    <ErrorBoundary fallback={<DatePickerErrorFallback />}>
+      <OutsideClickHandler onOutsideClick={handleCalendarOutsideClick}>
+        <StyledContainer>
+          <Input
+            label={inputLabel}
+            value={type === 'from' ? intervals.fromDate : intervals.toDate}
+            placeholder={inputPlaceholder}
+            onChange={handleDateInputChanges}
+            onCalendarIconClick={handleCalendarIconClick}
           />
-        )}
-      </StyledContainer>
-    </OutsideClickHandler>
+          {isShowCalendar && (
+            <Calendar
+              calendarDate={calendarDate}
+              selectedDate={selectedDate}
+              interval={intervals}
+              holidays={holidays}
+              withTasks={withTasks}
+              isStartsFromSunday={isWeeksStartsFromSunday}
+              isWeeksCalendar={isWeeksCalendar}
+              isWithWeekends={isWithWeekends}
+              withOpeningAnimation={withCalendarOpeningAnimation}
+              dateRestrictions={dateRestrictions}
+              onDateClick={onCalendarDayClick}
+              onDateChange={onDateChange}
+              onCancelClick={onCancelButtonClick}
+            />
+          )}
+        </StyledContainer>
+      </OutsideClickHandler>
+    </ErrorBoundary>
   );
 };
 
