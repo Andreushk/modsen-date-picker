@@ -3,8 +3,10 @@ import { createPortal } from 'react-dom';
 
 import { Tasks } from '@/components';
 import useLongPress from '@/hooks/useLongPress';
+import { ILocalStorageData, ITask } from '@/types/localStorage';
+import { filterByPriority, formatDateToString, getLocalStorageData } from '@/utils/helpers';
 
-import StyledCell, { DayCellTypes } from './styled';
+import { DayCellTypes, StyledCell, StyledTasksIndicator } from './styled';
 
 export const SELECTED_DAY_TEST_ID = 'date-picker-selected-day';
 
@@ -25,18 +27,33 @@ const DayCell: React.FC<IComponentProps> = ({
   isHoliday,
   isWithTasks,
 }) => {
+  const setInitialTasks = (): ITask[] | null => {
+    const localStorageData: ILocalStorageData | null = getLocalStorageData();
+    if (!localStorageData) return null;
+
+    const dayKey: string = formatDateToString(date);
+    const dayTasks: ITask[] | undefined = localStorageData.tasks[dayKey];
+
+    if (!dayTasks || dayTasks.length === 0) return null;
+    return filterByPriority(dayTasks);
+  };
+
+  const [dayTasks, setDayTasks] = useState<ITask[] | null>(setInitialTasks);
   const [isTasksOpen, setIsTasksOpen] = useState<boolean>(false);
   const container: HTMLElement | null = document.getElementById('date-picker-calendar');
 
-  const handleTasksClose = (): void => {
+  const handleCloseTasksWindow = (): void => {
     setIsTasksOpen(false);
   };
 
-  const handleTasksOpen = (): void => {
+  const handleOpenTasksWindow = (): void => {
     setIsTasksOpen(true);
   };
 
-  const { onMouseDown, onMouseUp, onTouchStart, onTouchEnd } = useLongPress(handleTasksOpen, 200);
+  const { onMouseDown, onMouseUp, onTouchStart, onTouchEnd } = useLongPress(
+    handleOpenTasksWindow,
+    200,
+  );
 
   return (
     <>
@@ -53,10 +70,19 @@ const DayCell: React.FC<IComponentProps> = ({
         data-testid={variant === 'selected' ? SELECTED_DAY_TEST_ID : null}
       >
         {date.getDate()}
+        {dayTasks && dayTasks.length > 0 && <StyledTasksIndicator />}
       </StyledCell>
       {isTasksOpen &&
         container &&
-        createPortal(<Tasks date={date} onClose={handleTasksClose} />, container)}
+        createPortal(
+          <Tasks
+            date={date}
+            tasks={dayTasks}
+            setTasks={setDayTasks}
+            onClose={handleCloseTasksWindow}
+          />,
+          container,
+        )}
     </>
   );
 };

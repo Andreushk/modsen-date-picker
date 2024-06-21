@@ -9,7 +9,8 @@ interface IStyleProps {
   $isHoliday: boolean;
 }
 
-const StyledCell = styled.td<IStyleProps>`
+export const StyledCell = styled.td<IStyleProps>`
+  position: relative;
   cursor: pointer;
   width: ${({ theme }) => theme.widths.calendarDay};
   height: ${({ theme }) => theme.heights.calendarDay};
@@ -92,4 +93,12 @@ const StyledCell = styled.td<IStyleProps>`
     `}
 `;
 
-export default StyledCell;
+export const StyledTasksIndicator = styled.div`
+  position: absolute;
+  top: ${({ theme }) => theme.spaces[0]};
+  right: ${({ theme }) => theme.spaces[0]};
+  background-color: ${({ theme }) => theme.colors.backgrounds.hint};
+  border-radius: ${({ theme }) => theme.borderRadiuses.calendarItems};
+  width: ${({ theme }) => theme.widths.taskIndicator};
+  height: ${({ theme }) => theme.heights.taskIndicator};
+`;

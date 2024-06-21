@@ -1,13 +1,11 @@
 import { useCallback, useState } from 'react';
 
-import { ILocalStorageData, ITask } from '@/types/localStorage';
+import { ITask } from '@/types/localStorage';
 import {
   addTaskToLocalStorage,
   changeTaskPriorityStatus,
   deleteTaskFromLocalStorage,
   filterByPriority,
-  formatDateToString,
-  getLocalStorageData,
   getNextId,
   togglePriority,
 } from '@/utils/helpers';
@@ -22,21 +20,11 @@ export const TASKS_LIST_TEST_ID = 'date-picker-tasks-list';
 
 interface IComponentProps {
   date: Date;
+  tasks: ITask[] | null;
+  setTasks: (newTasks: ITask[]) => void;
 }
 
-const List: React.FC<IComponentProps> = ({ date }) => {
-  const setInitialTasks = (): ITask[] | null => {
-    const localStorageData: ILocalStorageData | null = getLocalStorageData();
-    if (!localStorageData) return null;
-
-    const dayKey: string = formatDateToString(date);
-    const dayTasks: ITask[] | undefined = localStorageData.tasks[dayKey];
-
-    if (!dayTasks) return null;
-    return filterByPriority(dayTasks);
-  };
-
-  const [tasks, setTasks] = useState<ITask[] | null>(setInitialTasks);
+const List: React.FC<IComponentProps> = ({ date, tasks, setTasks }) => {
   const [isTaskInputOpen, setIsTaskInputOpen] = useState<boolean>(false);
 
   const handleNewTask = (taskValue: string): void => {
@@ -61,17 +49,17 @@ const List: React.FC<IComponentProps> = ({ date }) => {
   const handleTaskPriority = useCallback(
     (taskId: number) => {
       changeTaskPriorityStatus(date, taskId);
-      setTasks((prevTasks) => filterByPriority(togglePriority(prevTasks!, taskId)));
+      setTasks(filterByPriority(togglePriority(tasks!, taskId)));
     },
-    [date],
+    [date, tasks, setTasks],
   );
 
   const handleTaskDelete = useCallback(
     (taskId: number) => {
       deleteTaskFromLocalStorage(date, taskId);
-      setTasks((prevTasks) => prevTasks!.filter(({ id }) => taskId !== id));
+      setTasks(tasks!.filter(({ id }) => taskId !== id));
     },
-    [date],
+    [date, tasks, setTasks],
   );
 
   return (

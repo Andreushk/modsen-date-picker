@@ -33,6 +33,7 @@ const theme: ITheme = {
     },
   },
   widths: {
+    taskIndicator: '0.25rem',
     border: '1px',
     calendar: '15.625rem',
     icons: '1rem',
@@ -40,6 +41,7 @@ const theme: ITheme = {
     tasksControls: '4rem',
   },
   heights: {
+    taskIndicator: '0.25rem',
     hintIndicator: '0.25rem',
     inputs: '2.625rem',
     icons: '1rem',

@@ -28,6 +28,7 @@ interface IWidths {
   icons: string;
   calendarDay: string;
   tasksControls: string;
+  taskIndicator: string;
 }
 
 interface IHeights {
@@ -36,6 +37,7 @@ interface IHeights {
   icons: string;
   calendarDay: string;
   tasksList: string;
+  taskIndicator: string;
 }
 
 interface IFontSizes {

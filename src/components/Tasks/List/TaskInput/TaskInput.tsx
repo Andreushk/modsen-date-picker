@@ -18,7 +18,7 @@ const TaskInput: React.FC<IComponentProps> = ({ onClose, onTaskSave }) => {
 
   const handleKeyup = useCallback(
     (e: KeyboardEvent): void => {
-      if (e.code === 'Enter' && value.trim().length > 6) {
+      if (e.code === 'Enter' && value.trim().length > 5) {
         onTaskSave(value.trim());
       }
     },
@@ -49,6 +49,7 @@ const TaskInput: React.FC<IComponentProps> = ({ onClose, onTaskSave }) => {
         <StyledInput
           type="text"
           value={value}
+          autoFocus
           onChange={handleInputChanges}
           data-testid={TASK_INPUT_TEST_ID}
         />
