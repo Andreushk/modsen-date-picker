@@ -24,6 +24,7 @@ interface IComponentProps {
   isStartsFromSunday: boolean;
   isWeeksCalendar: boolean;
   isWithWeekends: boolean;
+  isInputWithLabel: boolean;
   dateRestrictions: [Date, Date] | undefined;
   onDateClick: (day: string) => void;
   onDateChange: (newDate: Date) => void;
@@ -39,6 +40,7 @@ const Calendar: React.FC<IComponentProps> = ({
   isStartsFromSunday,
   isWeeksCalendar,
   isWithWeekends,
+  isInputWithLabel,
   withOpeningAnimation,
   dateRestrictions,
   onDateClick,
@@ -109,6 +111,7 @@ const Calendar: React.FC<IComponentProps> = ({
       data-testid={DATE_PICKER_CALENDAR_ID}
       $isVisible={isVisible}
       $isWithCancelButton={isSomethingSelected}
+      $isInputWithLabel={isInputWithLabel}
       onClick={handleCalendarClick}
     >
       <TitleWithControls

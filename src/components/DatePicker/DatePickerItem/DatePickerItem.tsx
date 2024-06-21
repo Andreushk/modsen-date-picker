@@ -99,6 +99,7 @@ const DatePickerItem: React.FC<IComponentProps> = ({
               isStartsFromSunday={isWeeksStartsFromSunday}
               isWeeksCalendar={isWeeksCalendar}
               isWithWeekends={isWithWeekends}
+              isInputWithLabel={Boolean(inputLabel)}
               withOpeningAnimation={withCalendarOpeningAnimation}
               dateRestrictions={dateRestrictions}
               onDateClick={onCalendarDayClick}

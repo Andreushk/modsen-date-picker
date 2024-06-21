@@ -22,12 +22,6 @@ const StyledContainer = styled.div`
         fill: ${({ theme }) => theme.colors.primary};
       }
     }
-
-    &:focus {
-      & svg {
-        fill: ${({ theme }) => theme.colors.primary};
-      }
-    }
   }
 
   & svg {

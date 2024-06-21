@@ -2,12 +2,12 @@ import ITheme from '@/types/theme';
 
 const theme: ITheme = {
   spaces: [
-    '5px', // 0
-    '8px', // 1
-    '10px', // 2
-    '16px', // 3
-    '30px', // 4
-    '32px', // 5
+    '0.313rem', // 0
+    '0.5rem', // 1
+    '0.625rem', // 2
+    '1rem', // 3
+    '1.875rem', // 4
+    '2rem', // 5
   ],
   colors: {
     primary: '#2F80ED',
@@ -34,29 +34,29 @@ const theme: ITheme = {
   },
   widths: {
     border: '1px',
-    calendar: '250px',
-    icons: '16px',
-    calendarDay: '32px',
-    tasksControls: '64px',
+    calendar: '15.625rem',
+    icons: '1rem',
+    calendarDay: '2rem',
+    tasksControls: '4rem',
   },
   heights: {
-    hintIndicator: '4px',
-    inputs: '42px',
-    icons: '16px',
-    calendarDay: '32px',
-    tasksList: '270px',
+    hintIndicator: '0.25rem',
+    inputs: '2.625rem',
+    icons: '1rem',
+    calendarDay: '2rem',
+    tasksList: '16.875rem',
   },
   fontSizes: {
-    input: '15px',
-    calendarTitle: '14px',
-    calendarDay: '13px',
-    calendarButton: '12px',
+    input: '0.938rem',
+    calendarTitle: '0.875rem',
+    calendarDay: '0.813rem',
+    calendarButton: '0.75rem',
   },
   lineHeights: {
-    input: '20.43px',
-    calendarTitle: '19.07px',
-    calendarDay: '17.7px',
-    calendarButton: '16.34px',
+    input: '1.277rem',
+    calendarTitle: '1.192rem',
+    calendarDay: '1.106rem',
+    calendarButton: '1.021rem',
   },
   fontWeights: {
     regular: 400,
@@ -64,7 +64,7 @@ const theme: ITheme = {
     bold: 700,
   },
   borderRadiuses: {
-    calendarItems: '8px',
+    calendarItems: '0.5rem',
   },
   durations: {
     slow: '7000ms',

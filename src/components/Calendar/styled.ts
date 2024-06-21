@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 interface IStyleProps {
   $isVisible: boolean;
   $isWithCancelButton: boolean;
+  $isInputWithLabel: boolean;
 }
 
 const StyledContainer = styled.div<IStyleProps>`
@@ -10,12 +11,20 @@ const StyledContainer = styled.div<IStyleProps>`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   position: absolute;
   left: 0;
-  ${({ theme }) => css`
-    top: calc(${theme.lineHeights.input} + ${theme.spaces[3]} + ${theme.heights.inputs});
-  `}
+
+  ${({ $isInputWithLabel, theme }) =>
+    $isInputWithLabel &&
+    css`
+      top: calc(${theme.lineHeights.input} + ${theme.spaces[3]} + ${theme.heights.inputs});
+    `}
+
+  ${({ $isInputWithLabel, theme }) =>
+    !$isInputWithLabel &&
+    css`
+      top: calc(${theme.spaces[2]} + ${theme.heights.inputs});
+    `}
 
   ${({ $isWithCancelButton }) =>
     !$isWithCancelButton &&
