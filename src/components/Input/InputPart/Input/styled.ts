@@ -9,13 +9,11 @@ const StyledInput = styled.input`
   outline: none;
   padding-right: ${({ theme }) => theme.spaces[1]};
   padding-left: ${({ theme }) => theme.spaces[1]};
-  font-family: 'Open Sans', sans-serif;
   font-size: ${({ theme }) => theme.fontSizes.input};
   font-weight: ${({ theme }) => theme.fontWeights.regular};
   line-height: ${({ theme }) => theme.lineHeights.input};
 
   &::placeholder {
-    font-family: 'Open Sans', sans-serif;
     font-size: ${({ theme }) => theme.fontSizes.input};
     font-weight: ${({ theme }) => theme.fontWeights.regular};
     line-height: ${({ theme }) => theme.lineHeights.input};

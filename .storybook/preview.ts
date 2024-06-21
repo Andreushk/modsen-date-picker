@@ -1,9 +1,10 @@
-import type { Preview } from '@storybook/react';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
+import type { Preview } from '@storybook/react';
 
-import theme from '../src/styles/theme';
-import GlobalStyles from '../src/styles/global';
 import { ThemeProvider } from 'styled-components';
+import GlobalStyles from '../src/styles/global';
+import theme from '../src/styles/theme';
+import './preview.css';
 
 export const decorators = [
   withThemeFromJSXProvider({

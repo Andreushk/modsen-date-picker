@@ -21,10 +21,33 @@ const config: StorybookConfig = {
     },
   },
   webpackFinal: async (config) => {
-    config.resolve!.alias = {
-      ...config.resolve!.alias,
+    config.resolve = config.resolve || {};
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
       '@': path.resolve(__dirname, '..', 'src'),
     };
+
+    config.module = config.module || {};
+    config.module.rules = config.module.rules || [];
+
+    config.module.rules = config.module.rules.filter(
+      (rule) =>
+        rule && typeof rule === 'object' && rule.test && !rule.test.toString().includes('ttf'),
+    );
+
+    config.module.rules.push({
+      test: /\.(woff|woff2|ttf|eot)$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'assets/fonts',
+            publicPath: 'assets/fonts',
+          },
+        },
+      ],
+    });
 
     return config;
   },

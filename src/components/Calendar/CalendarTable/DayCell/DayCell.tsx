@@ -70,7 +70,7 @@ const DayCell: React.FC<IComponentProps> = ({
         data-testid={variant === 'selected' ? SELECTED_DAY_TEST_ID : null}
       >
         {date.getDate()}
-        {dayTasks && dayTasks.length > 0 && <StyledTasksIndicator />}
+        {dayTasks && dayTasks.length > 0 && isWithTasks && <StyledTasksIndicator />}
       </StyledCell>
       {isTasksOpen &&
         container &&
