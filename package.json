@@ -1,6 +1,6 @@
 {
   "name": "@andreushk/date-picker-library",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "calendar library",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -21,7 +21,8 @@
     "lint:write": "eslint --debug \"src/**/*.{tsx,ts}\" --fix --color",
     "prepare": "husky install"
   },
-  "author": "",
+  "repository": "https://github.com/Andreushk/modsen-date-picker",
+  "author": "Andreushk <andrewshkt@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.24.3",

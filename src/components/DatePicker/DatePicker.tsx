@@ -42,25 +42,21 @@ const DatePicker: React.FC<IDatePickerProps> = ({
 
   const holidays: Date[] | null = useGetCountryHolidays(calendarDate, countryCodeForHolidays);
 
-  const handleInputChanges = useCallback(
-    (date: string, type: DatePickerType): void => {
-      if (type === 'to') {
-        const enteredDate: Date = formatStringToDate(date);
-        const fromDate: Date = formatStringToDate(intervals.fromDate);
+  const handleInputChanges = useCallback((date: string, type: DatePickerType): void => {
+    setIntervals((prevIntervals) => {
+      const enteredDate: Date = formatStringToDate(date);
+      const fromDate: Date = formatStringToDate(prevIntervals.fromDate);
 
-        if (enteredDate < fromDate) {
-          setIntervals({ fromDate: '', toDate: date });
-          return;
-        }
+      if (type === 'to' && enteredDate < fromDate) {
+        return { fromDate: '', toDate: date };
       }
 
-      setIntervals((prevIntervals) => ({
+      return {
         fromDate: type === 'from' ? date : prevIntervals.fromDate,
         toDate: type === 'to' ? date : prevIntervals.toDate,
-      }));
-    },
-    [intervals],
-  );
+      };
+    });
+  }, []);
 
   const handleCalendarOpen = useCallback((calendarType: CalendarTypes): void => {
     setShowingCalendarType(calendarType);
@@ -70,24 +66,21 @@ const DatePicker: React.FC<IDatePickerProps> = ({
     setIntervals({ fromDate: '', toDate: '' });
   }, []);
 
-  const processAndSetIntervalDates = useCallback(
-    (dateString: string) => {
-      if (!intervals.fromDate) {
-        setIntervals({ ...intervals, fromDate: dateString });
-        return;
+  const processAndSetIntervalDates = useCallback((dateString: string) => {
+    setIntervals((prevIntervals) => {
+      if (!prevIntervals.fromDate) {
+        return { ...prevIntervals, fromDate: dateString };
       }
 
       const clickedDate: Date = formatStringToDate(dateString);
-      const fromDate: Date = formatStringToDate(intervals.fromDate);
+      const fromDate: Date = formatStringToDate(prevIntervals.fromDate);
 
       if (clickedDate < fromDate) {
-        setIntervals({ ...intervals, fromDate: dateString });
-      } else {
-        setIntervals({ ...intervals, toDate: dateString });
+        return { ...prevIntervals, fromDate: dateString };
       }
-    },
-    [intervals],
-  );
+      return { ...prevIntervals, toDate: dateString };
+    });
+  }, []);
 
   const handleDayClick = useCallback(
     (dateString: string) => {
