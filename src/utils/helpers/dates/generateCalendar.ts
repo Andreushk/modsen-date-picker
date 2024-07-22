@@ -1,21 +1,17 @@
-const getStartOfWeek = (date: Date, startOfWeek: 0 | 1): Date => {
+import { DAYS_IN_WEEK, WeekDays } from '@/constants/days';
+
+const getStartOfWeek = (date: Date, startOfWeek: WeekDays.Sunday | WeekDays.Monday): Date => {
+  const day = date.getDay();
+  const diff = day < startOfWeek ? day + DAYS_IN_WEEK - startOfWeek : day - startOfWeek;
   const start = new Date(date);
-  const day = start.getDay();
-
-  let diff;
-  if (startOfWeek === 0) {
-    diff = start.getDate() - day;
-  } else if (day === 0) {
-    diff = start.getDate() - 6;
-  } else {
-    diff = start.getDate() - day + 1;
-  }
-
-  start.setDate(diff);
+  start.setDate(date.getDate() - diff);
   return start;
 };
 
-const generateMonthCalendar = (date: Date, startOfWeek: 0 | 1): Date[] => {
+const generateMonthCalendar = (
+  date: Date,
+  startOfWeek: WeekDays.Sunday | WeekDays.Monday,
+): Date[] => {
   const days: Date[] = [];
   const year = date.getFullYear();
   const month = date.getMonth();
@@ -23,48 +19,50 @@ const generateMonthCalendar = (date: Date, startOfWeek: 0 | 1): Date[] => {
   const firstDayOfMonth = new Date(year, month, 1);
   const lastDayOfMonth = new Date(year, month + 1, 0);
 
-  const firstDayOfWeek = (firstDayOfMonth.getDay() - startOfWeek + 7) % 7;
-  const lastDayOfWeek = (lastDayOfMonth.getDay() - startOfWeek + 7) % 7;
+  const firstDayOfWeek = (firstDayOfMonth.getDay() - startOfWeek + DAYS_IN_WEEK) % DAYS_IN_WEEK;
+  const lastDayOfWeek = (lastDayOfMonth.getDay() - startOfWeek + DAYS_IN_WEEK) % DAYS_IN_WEEK;
 
-  for (let i = firstDayOfWeek; i > 0; ) {
+  for (let i = firstDayOfWeek; i > 0; i--) {
     days.push(new Date(year, month, 1 - i));
-    i -= 1;
   }
 
-  for (let i = 1; i <= lastDayOfMonth.getDate(); ) {
+  for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
     days.push(new Date(year, month, i));
-    i += 1;
   }
 
-  for (let i = 1; i < 7 - lastDayOfWeek; ) {
+  for (let i = 1; i < DAYS_IN_WEEK - lastDayOfWeek; i++) {
     days.push(new Date(year, month + 1, i));
-    i += 1;
   }
 
   return days;
 };
 
-const generateWeekCalendar = (date: Date, startOfWeek: 0 | 1): Date[] => {
+const generateWeekCalendar = (
+  date: Date,
+  startOfWeek: WeekDays.Sunday | WeekDays.Monday,
+): Date[] => {
   const days: Date[] = [];
   const start = getStartOfWeek(date, startOfWeek);
 
-  for (let i = 0; i < 7; ) {
+  for (let i = 0; i < DAYS_IN_WEEK; i++) {
     const currentDate = new Date(start);
     currentDate.setDate(start.getDate() + i);
     days.push(currentDate);
-    i += 1;
   }
 
   return days;
 };
 
 const generateCalendar = (type: 'month' | 'week', date: Date, isFromSunday: boolean): Date[] => {
-  const startOfWeekIndex: 0 | 1 = isFromSunday ? 0 : 1;
+  const startOfWeek: WeekDays.Sunday | WeekDays.Monday = isFromSunday
+    ? WeekDays.Sunday
+    : WeekDays.Monday;
 
   if (type === 'month') {
-    return generateMonthCalendar(date, startOfWeekIndex);
+    return generateMonthCalendar(date, startOfWeek);
   }
-  return generateWeekCalendar(date, startOfWeekIndex);
+
+  return generateWeekCalendar(date, startOfWeek);
 };
 
 export default generateCalendar;

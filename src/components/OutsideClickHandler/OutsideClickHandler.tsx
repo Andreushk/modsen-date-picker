@@ -13,18 +13,18 @@ const OutsideClickHandler: React.FC<IComponentProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const handleClick = (event: MouseEvent) => {
-    if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-      onOutsideClick();
-    }
-  };
-
   useEffect(() => {
+    const handleClick = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        onOutsideClick();
+      }
+    };
+
     document.addEventListener('click', handleClick, isWithCapturePhase);
     return () => {
       document.removeEventListener('click', handleClick, isWithCapturePhase);
     };
-  });
+  }, [isWithCapturePhase, onOutsideClick]);
 
   return <div ref={containerRef}>{children}</div>;
 };

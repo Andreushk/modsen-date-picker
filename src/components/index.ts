@@ -9,3 +9,4 @@ export { default as Tasks } from './Tasks/Tasks';
 export { default as Button } from './Button/Button';
 export { default as ErrorBoundary } from './ErrorBoundary/ErrorBoundary';
 export { default as DatePickerErrorFallback } from './DatePickerErrorFallback/DatePickerErrorFallback';
+export { default as PortalToCalendarContainer } from './PortalToCalendarContainer';

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { DAYS_IN_WEEK, WeekDays } from '@/constants/days';
 import MONTHS from '@/constants/months';
 import { extractDateParts, getWeekStartDate } from '@/utils/helpers';
 
@@ -24,19 +25,15 @@ const TitleWithControls: React.FC<IComponentProps> = ({
   const { year, month, day } = extractDateParts(calendarDate);
 
   const handleNextButtonClick = (): void => {
-    if (isWeeksCalendar) {
-      onDateSwitch(new Date(year, month, day + 7));
-    } else {
-      onDateSwitch(new Date(year, month + 1));
-    }
+    isWeeksCalendar
+      ? onDateSwitch(new Date(year, month, day + DAYS_IN_WEEK))
+      : onDateSwitch(new Date(year, month + 1));
   };
 
   const handlePrevButtonClick = (): void => {
-    if (isWeeksCalendar) {
-      onDateSwitch(new Date(year, month, day - 7));
-    } else {
-      onDateSwitch(new Date(year, month - 1));
-    }
+    isWeeksCalendar
+      ? onDateSwitch(new Date(year, month, day - DAYS_IN_WEEK))
+      : onDateSwitch(new Date(year, month - 1));
   };
 
   const isButtonsDisabled = (): [boolean, boolean] => {
@@ -55,7 +52,7 @@ const TitleWithControls: React.FC<IComponentProps> = ({
     } else {
       const startOfWeek: Date = getWeekStartDate(calendarDate);
       const endOfWeek: Date = new Date(startOfWeek);
-      endOfWeek.setDate(startOfWeek.getDate() + 6);
+      endOfWeek.setDate(startOfWeek.getDate() + WeekDays.Saturday);
 
       isPrevButtonDisabled = startOfWeek < fromRestriction;
       isNextButtonDisabled = endOfWeek > toRestriction;

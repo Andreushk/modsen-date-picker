@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
 
-import { Tasks } from '@/components';
+import { PortalToCalendarContainer, Tasks } from '@/components';
 import useLongPress from '@/hooks/useLongPress';
 import { ILocalStorageData, ITask } from '@/types/localStorage';
 import { filterByPriority, formatDateToString, getLocalStorageData } from '@/utils/helpers';
@@ -40,7 +39,6 @@ const DayCell: React.FC<IComponentProps> = ({
 
   const [dayTasks, setDayTasks] = useState<ITask[] | null>(setInitialTasks);
   const [isTasksOpen, setIsTasksOpen] = useState<boolean>(false);
-  const container: HTMLElement | null = document.getElementById('date-picker-calendar');
 
   const handleCloseTasksWindow = (): void => {
     setIsTasksOpen(false);
@@ -72,17 +70,16 @@ const DayCell: React.FC<IComponentProps> = ({
         {date.getDate()}
         {dayTasks && dayTasks.length > 0 && isWithTasks && <StyledTasksIndicator />}
       </StyledCell>
-      {isTasksOpen &&
-        container &&
-        createPortal(
+      {isTasksOpen && (
+        <PortalToCalendarContainer>
           <Tasks
             date={date}
             tasks={dayTasks}
             setTasks={setDayTasks}
             onClose={handleCloseTasksWindow}
-          />,
-          container,
-        )}
+          />
+        </PortalToCalendarContainer>
+      )}
     </>
   );
 };

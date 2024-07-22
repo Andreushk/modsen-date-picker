@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DAYS from '@/constants/days';
+import { DAYS } from '@/constants/days';
 
 import StyledCell from './styled';
 

@@ -2,13 +2,14 @@ import React from 'react';
 
 import StyledButton from './styled';
 
-interface IComponentProps {
+type ButtonAttributesType = React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+interface IComponentProps extends ButtonAttributesType {
   children: React.ReactNode;
-  onClick: () => void;
 }
 
-const Button: React.FC<IComponentProps> = ({ children, onClick }) => (
-  <StyledButton type="button" onClick={onClick}>
+const Button: React.FC<IComponentProps> = ({ children, ...props }) => (
+  <StyledButton type="button" {...props}>
     {children}
   </StyledButton>
 );
