@@ -120,8 +120,8 @@ const SomeComponent = () => {
   calendarService.addFunctionality(withWeeksCalendar());
   calendarService.addFunctionality(withWeekends());
   calendarService.addFunctionality(withTasks());
-  calendarService.addFunctionality(withOnDateSelect(handle));
-  calendarService.addFunctionality(withOnLastDateSelect(handle1));
+  calendarService.addFunctionality(withOnDateSelect(handleDateChange));
+  calendarService.addFunctionality(withOnLastDateSelect(handleLastDateChange));
   calendarService.addFunctionality(withCalendarOpeningAnimation());
   calendarService.addFunctionality(withHolidays('BY'));
   const CalendarComponent = calendarService.getCalendar();
