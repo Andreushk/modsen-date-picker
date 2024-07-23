@@ -2,9 +2,7 @@ import { IDatePickerProps } from '@/components/DatePicker/types';
 
 const withWeekends =
   () =>
-  <P extends IDatePickerProps>(
-    WrappedComponent: React.FC<P>,
-  ): React.FC<Omit<P, 'isWithWeekends'>> =>
-  (props: Omit<P, 'isWithWeekends'>) => <WrappedComponent {...(props as P)} isWithWeekends />;
+  <P extends IDatePickerProps>(WrappedComponent: React.FC<P>): React.FC<P> =>
+  (props: P) => <WrappedComponent {...props} isWithWeekends />;
 
 export default withWeekends;

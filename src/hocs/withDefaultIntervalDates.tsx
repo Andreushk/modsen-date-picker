@@ -4,10 +4,8 @@ import { formatDateToString } from '@/utils/helpers';
 
 const withDefaultIntervalDates =
   (from?: HOCDateFormat, to?: HOCDateFormat) =>
-  <P extends IDatePickerProps>(
-    WrappedComponent: React.FC<P>,
-  ): React.FC<Omit<P, 'inputDefaultDateValue' | 'toInputDefaultDateValue'>> =>
-  (props: Omit<P, 'inputDefaultDateValue' | 'toInputDefaultDateValue'>) => {
+  <P extends IDatePickerProps>(WrappedComponent: React.FC<P>): React.FC<P> =>
+  (props) => {
     let fromDateString: string | undefined;
     let toDateString: string | undefined;
 
@@ -23,7 +21,7 @@ const withDefaultIntervalDates =
 
     return (
       <WrappedComponent
-        {...(props as P)}
+        {...props}
         inputDefaultDateValue={fromDateString}
         toInputDefaultDateValue={toDateString}
       />

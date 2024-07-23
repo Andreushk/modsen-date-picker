@@ -10,3 +10,5 @@ export { default as withWeeksCalendar } from './withWeeksCalendar';
 export { default as withWeekends } from './withWeekends';
 export { default as withHolidays } from './withHolidays';
 export { default as withTasks } from './withTasks';
+export { default as withOnDateSelect } from './withOnDateSelect';
+export { default as withOnLastDateSelect } from './withOnLastDateSelect';

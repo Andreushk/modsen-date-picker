@@ -11,5 +11,7 @@ export {
   withWeekends,
   withHolidays,
   withTasks,
+  withOnDateSelect,
+  withOnLastDateSelect,
 } from '@/hocs';
 export { CalendarService } from '@/services';

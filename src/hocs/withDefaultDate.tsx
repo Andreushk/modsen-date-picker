@@ -10,14 +10,12 @@ const withDefaultDate = (date: HOCDateFormat) => {
     throw new Error(NO_DEFAULT_DATE);
   }
 
-  return <P extends IDatePickerProps>(
-    WrappedComponent: React.FC<P>,
-  ): React.FC<Omit<P, 'inputDefaultDateValue'>> => {
+  return <P extends IDatePickerProps>(WrappedComponent: React.FC<P>): React.FC<P> => {
     const [year, month, day] = date;
 
-    return (props: Omit<P, 'inputDefaultDateValue'>) => (
+    return (props) => (
       <WrappedComponent
-        {...(props as P)}
+        {...props}
         inputDefaultDateValue={formatDateToString(new Date(year, month - 1, day))}
       />
     );

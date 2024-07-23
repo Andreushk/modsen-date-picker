@@ -94,9 +94,20 @@ import {
   withWeekends,
   withWeeksCalendar,
   withWeeksFromSunday,
+  withOnDateSelect,
+  withOnLastDateSelect
 } from '@andreushk/date-picker-library';
 
 const SomeComponent = () => {
+
+  const handleDateChange = useCallback((date: string) => {
+    console.log('Selected date:', date);
+  }, []);
+
+  const handleLastDateChange = useCallback((date: string) => {
+    console.log('Selected date:', date);
+  }, []);
+
   const calendarService = new CalendarService();
 
   calendarService.addFunctionality(withInputLabel('Date'));
@@ -109,6 +120,8 @@ const SomeComponent = () => {
   calendarService.addFunctionality(withWeeksCalendar());
   calendarService.addFunctionality(withWeekends());
   calendarService.addFunctionality(withTasks());
+  calendarService.addFunctionality(withOnDateSelect(handle));
+  calendarService.addFunctionality(withOnLastDateSelect(handle1));
   calendarService.addFunctionality(withCalendarOpeningAnimation());
   calendarService.addFunctionality(withHolidays('BY'));
   const CalendarComponent = calendarService.getCalendar();

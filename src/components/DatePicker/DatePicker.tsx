@@ -24,6 +24,8 @@ const DatePicker: React.FC<IDatePickerProps> = ({
   isWithWeekends,
   withTasks,
   countryCodeForHolidays,
+  onDateSelect,
+  onLastDateSelect,
 }) => {
   const getInitialDate = (): Date => {
     if (inputDefaultDateValue) {
@@ -42,21 +44,32 @@ const DatePicker: React.FC<IDatePickerProps> = ({
 
   const holidays: Date[] | null = useGetCountryHolidays(calendarDate, countryCodeForHolidays);
 
-  const handleInputChanges = useCallback((date: string, type: DatePickerType): void => {
-    setIntervals((prevIntervals) => {
-      const enteredDate: Date = formatStringToDate(date);
-      const fromDate: Date = formatStringToDate(prevIntervals.fromDate);
+  const handleInputChanges = useCallback(
+    (date: string, type: DatePickerType): void => {
+      setIntervals((prevIntervals) => {
+        const enteredDate = formatStringToDate(date);
+        const fromDate = formatStringToDate(prevIntervals.fromDate);
+        const isToType = type === 'to';
 
-      if (type === 'to' && enteredDate < fromDate) {
-        return { fromDate: '', toDate: date };
-      }
+        if (isToType && enteredDate < fromDate) {
+          onLastDateSelect?.(date);
+          return { fromDate: '', toDate: date };
+        }
 
-      return {
-        fromDate: type === 'from' ? date : prevIntervals.fromDate,
-        toDate: type === 'to' ? date : prevIntervals.toDate,
-      };
-    });
-  }, []);
+        const updatedIntervals = {
+          fromDate: type === 'from' ? date : prevIntervals.fromDate,
+          toDate: isToType ? date : prevIntervals.toDate,
+        };
+
+        type === 'from'
+          ? onDateSelect?.(updatedIntervals.fromDate)
+          : onLastDateSelect?.(updatedIntervals.toDate);
+
+        return updatedIntervals;
+      });
+    },
+    [onDateSelect, onLastDateSelect],
+  );
 
   const handleCalendarOpen = useCallback((calendarType: CalendarTypes): void => {
     setShowingCalendarType(calendarType);
@@ -66,21 +79,30 @@ const DatePicker: React.FC<IDatePickerProps> = ({
     setIntervals({ fromDate: '', toDate: '' });
   }, []);
 
-  const processAndSetIntervalDates = useCallback((dateString: string) => {
-    setIntervals((prevIntervals) => {
-      if (!prevIntervals.fromDate) {
-        return { ...prevIntervals, fromDate: dateString };
-      }
+  const processAndSetIntervalDates = useCallback(
+    (dateString: string) => {
+      setIntervals((prevIntervals) => {
+        if (!prevIntervals.fromDate) {
+          if (onDateSelect) onDateSelect(dateString);
+          return { ...prevIntervals, fromDate: dateString };
+        }
 
-      const clickedDate: Date = formatStringToDate(dateString);
-      const fromDate: Date = formatStringToDate(prevIntervals.fromDate);
+        const clickedDate: Date = formatStringToDate(dateString);
+        const fromDate: Date = formatStringToDate(prevIntervals.fromDate);
 
-      if (clickedDate < fromDate) {
-        return { ...prevIntervals, fromDate: dateString };
-      }
-      return { ...prevIntervals, toDate: dateString };
-    });
-  }, []);
+        if (clickedDate < fromDate) {
+          if (onDateSelect) onDateSelect(dateString);
+          return { ...prevIntervals, fromDate: dateString };
+        }
+
+        if (onLastDateSelect) {
+          onLastDateSelect(dateString);
+        }
+        return { ...prevIntervals, toDate: dateString };
+      });
+    },
+    [onDateSelect, onLastDateSelect],
+  );
 
   const handleDayClick = useCallback(
     (dateString: string) => {
@@ -88,9 +110,10 @@ const DatePicker: React.FC<IDatePickerProps> = ({
         processAndSetIntervalDates(dateString);
       } else {
         setIntervals({ fromDate: dateString, toDate: '' });
+        if (onDateSelect) onDateSelect(dateString);
       }
     },
-    [withInterval, processAndSetIntervalDates],
+    [withInterval, processAndSetIntervalDates, onDateSelect],
   );
 
   return (

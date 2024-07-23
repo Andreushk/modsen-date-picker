@@ -14,6 +14,8 @@ export interface IDatePickerProps {
   isWithWeekends?: boolean;
   withTasks?: boolean;
   countryCodeForHolidays?: string;
+  onDateSelect?: (selectedDate: string) => void;
+  onLastDateSelect?: (selectedDate: string) => void;
 }
 
 export interface IIntervalDates {

@@ -8,12 +8,8 @@ const withInputPlaceholder = (placeholder: string) => {
     throw new Error(NO_PLACEHOLDER);
   }
 
-  return <P extends IDatePickerProps>(
-      WrappedComponent: React.FC<P>,
-    ): React.FC<Omit<P, 'inputPlaceholder'>> =>
-    (props: Omit<P, 'inputPlaceholder'>) => (
-      <WrappedComponent {...(props as P)} inputPlaceholder={placeholder} />
-    );
+  return <P extends IDatePickerProps>(WrappedComponent: React.FC<P>): React.FC<P> =>
+    (props: P) => <WrappedComponent {...props} inputPlaceholder={placeholder} />;
 };
 
 export default withInputPlaceholder;

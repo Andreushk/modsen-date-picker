@@ -8,16 +8,14 @@ const withDatesRestrictions = (fromDates: HOCDateFormat, toDates: HOCDateFormat)
     throw new Error(NO_RESTRICTIONS_MESSAGE);
   }
 
-  return <P extends IDatePickerProps>(
-      WrappedComponent: React.FC<P>,
-    ): React.FC<Omit<P, 'dateRestrictions'>> =>
-    (props: Omit<P, 'dateRestrictions'>) => {
+  return <P extends IDatePickerProps>(WrappedComponent: React.FC<P>): React.FC<P> =>
+    (props: P) => {
       const [fromYear, fromMonth, fromDay] = fromDates;
       const [toYear, toMonth, toDay] = toDates;
 
       return (
         <WrappedComponent
-          {...(props as P)}
+          {...props}
           dateRestrictions={[
             new Date(fromYear, fromMonth - 1, fromDay),
             new Date(toYear, toMonth - 1, toDay),

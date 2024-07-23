@@ -7,22 +7,10 @@ const withInputPlaceholder =
     fromInputPlaceholder?: string,
     toInputPlaceholder?: string,
   ) =>
-  <P extends IDatePickerProps>(
-    WrappedComponent: React.FC<P>,
-  ): React.FC<
-    Omit<
-      P,
-      'withInterval' | 'inputLabel' | 'inputPlaceholder' | 'toInputLabel' | 'toInputPlaceholder'
-    >
-  > =>
-  (
-    props: Omit<
-      P,
-      'withInterval' | 'inputLabel' | 'inputPlaceholder' | 'toInputLabel' | 'toInputPlaceholder'
-    >,
-  ) => (
+  <P extends IDatePickerProps>(WrappedComponent: React.FC<P>): React.FC<P> =>
+  (props) => (
     <WrappedComponent
-      {...(props as P)}
+      {...props}
       withInterval
       inputLabel={fromInputLabel}
       inputPlaceholder={fromInputPlaceholder}
